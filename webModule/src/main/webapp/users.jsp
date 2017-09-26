@@ -11,6 +11,16 @@
     <title>Title</title>
 </head>
 <body>
-
+<form action="/users" method="post"><p>
+    <p>
+    <label><%=request.getAttribute("textValue")%></label>
+    </p>
+    <p>
+        <input type="text" placeholder="Enter something right here" name="textValue">
+    </p>
+    <p>
+        <input type="submit" title="Submit">
+    </p>
+</form>
 </body>
 </html>

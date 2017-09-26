@@ -14,14 +14,17 @@ public class MyOwnServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug(req.getQueryString());
-        logger.debug(resp.getWriter().toString());
+        req.setAttribute("textValue","I'am a little parrot!");
         req.getRequestDispatcher("users.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String data = req.getParameter("textValue");
+        req.setAttribute("textValue",data);
+        req.getRequestDispatcher("users.jsp").forward(req,resp);
+
+
 
     }
 }

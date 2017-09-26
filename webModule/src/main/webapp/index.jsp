@@ -1,15 +1,18 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
 <body>
 <h2>Hello World!</h2>
-Time <%
-    SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy HH:mm:ss");
+<%
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     Calendar calendar = Calendar.getInstance();
-    out.println(sdf.format(calendar.getTime()));
+
 %>
+<p>Date <%=sdf.format(calendar.getTime())%></p>
+<p><a href="/users">Check out my UberMegaServlet!</a></p>
 </body>
 </html>

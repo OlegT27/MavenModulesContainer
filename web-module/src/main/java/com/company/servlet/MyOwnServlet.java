@@ -1,5 +1,6 @@
 package com.company.servlet;
 
+import com.company.db.DatabaseAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,14 +15,16 @@ public class MyOwnServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("textValue","I'am a little parrot!");
+        //req.setAttribute("textValue","I'am a little parrot!");
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String data = req.getParameter("textValue");
-        req.setAttribute("textValue",data);
+        /*String data = req.getParameter("textValue");
+        req.setAttribute("textValue",data);*/
+        DatabaseAccess accessObject = new DatabaseAccess();
+        
         req.getRequestDispatcher("users.jsp").forward(req,resp);
 
 

@@ -13,14 +13,21 @@
 <body>
 <form action="/users" method="post"><p>
     <p>
-    <label><%=request.getAttribute("textValue")%></label>
+        <input type="text" placeholder="Name" name="user_name">
     </p>
     <p>
-        <input type="text" placeholder="Enter something right here" name="textValue">
+        <input type="text" placeholder="Surname" name="user_sname">
+    </p>
+    <p>
+        <input type="text" placeholder="Patronymic" name="user_patr">
+    </p>
+    <p>
+        <input type="date" placeholder="Date of birth" name="user_patr">
     </p>
     <p>
         <input type="submit" title="Submit">
     </p>
+
 </form>
 </body>
 </html>

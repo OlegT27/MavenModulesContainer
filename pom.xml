@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>webModule</module>
+        <module>web-module</module>
     </modules>
     <packaging>pom</packaging>
 

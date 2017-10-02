@@ -3,6 +3,8 @@ package com.company.db;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.nio.file.Files.readAllLines;
 
@@ -76,36 +78,92 @@ public class DatabaseAccess {
 
     }
 
-    public boolean getAllData(String tableName)
-    {
+    private List<DatabaseObject> getAllData() {
+        List<DatabaseObject> dataList = new ArrayList<DatabaseObject>();
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
-            ResultSet resultSet = state.executeQuery("SELECT * FROM" + tableName);
-            while (resultSet.next())
-            {
-                System.out.println(resultSet.getString("USER_NAME"));
+            ResultSet resultSet = state.executeQuery("SELECT * FROM USERS");
+            while (resultSet.next()) {
+                DatabaseObject record = new DatabaseObject();
+                record.setId(resultSet.getInt("USER_ID"));
+                record.setName(resultSet.getString("USER_NAME"));
+                record.setSurname(resultSet.getString("USER_SNAME"));
+                record.setPatron(resultSet.getString("USER_PATR"));
+                record.setBirthDate(resultSet.getDate("USER_BDATE"));
+                record.setExist(resultSet.getBoolean("USER_EXIST"));
+                dataList.add(record);
             }
-
+            return dataList;
         } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private boolean deleteUser(DatabaseObject record) {
+        try {
+            Connection connection = this.connectDB();
+            Statement state = connection.createStatement();
+            state.executeUpdate("UPDATE USERS SET USER_EXIST = 'FALSE' " +
+                    "WHERE USER_ID =" + 1); // wtf
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
-        return true;
+    }
+
+    private boolean addData(DatabaseObject record) {
+        try {
+            Connection connection = this.connectDB();
+            Statement state = connection.createStatement();
+            String sqlQuerry = "INSERT INTO USERS (USER_NAME,USER_SNAME,USER_PATR,USER_BDATE) VALUES('";
+            sqlQuerry += record.getName() + "','" + record.getSurname() + "','" + record.getPatron() + "','" + record.getBirthDate() + "');";
+            System.out.println(sqlQuerry);
+            state.executeUpdate(sqlQuerry);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
         String login = "postgres";
         String password = "megapass";
         String fileName = "C:\\DROP_TABLE.sql";
-        DatabaseAccess dao = new DatabaseAccess(postgresURL,login,password);
+        DatabaseAccess dao = new DatabaseAccess(postgresURL, login, password);
+        DatabaseObject object = new DatabaseObject();
         dao.executeSQLFromFile(fileName);
         fileName = "C:\\CREATE_TABLE.sql";
         dao.executeSQLFromFile(fileName);
+        object.setName("Oleg");
+        object.setSurname("Oleg");
+        object.setPatron("Oleg");
+        object.setBirthDate(Date.valueOf("1994-05-22"));
+        dao.addData(object);
+        List<DatabaseObject> list = dao.getAllData();
+        for (DatabaseObject l : list) {
+            System.out.println(l.getId() + l.getBirthDate().toString() + l.getName() + l.getExist());
+        }
+        list.clear();
+        dao.deleteUser(object);
+        list = dao.getAllData();
+        for (DatabaseObject l : list) {
+            System.out.println(l.getId() + l.getBirthDate().toString() + l.getName() + l.getExist());
+        }
 
-    }*/
+
+        //dao.executeSQLFromFile(fileName);
+        //fileName = "C:\\CREATE_TABLE.sql";
+        // dao.executeSQLFromFile(fileName);
+
+    }
 }
 
 

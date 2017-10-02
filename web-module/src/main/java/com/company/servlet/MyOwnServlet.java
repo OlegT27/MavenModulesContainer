@@ -1,6 +1,7 @@
 package com.company.servlet;
 
 import com.company.db.DatabaseAccess;
+import com.company.db.DatabaseObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class MyOwnServlet extends HttpServlet {
         /*String data = req.getParameter("textValue");
         req.setAttribute("textValue",data);*/
         DatabaseAccess accessObject = new DatabaseAccess();
-        
+        req.setAttribute("respObject",new DatabaseObject());
         req.getRequestDispatcher("users.jsp").forward(req,resp);
 
 

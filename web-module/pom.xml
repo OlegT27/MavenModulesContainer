@@ -44,6 +44,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>webModule</finalName>
+        <finalName>web-module</finalName>
     </build>
 </project>

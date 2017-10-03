@@ -13,6 +13,6 @@
 
 %>
 <p>Date <%=sdf.format(calendar.getTime())%></p>
-<p><a href="/users">Check out my UberMegaServlet!</a></p>
+<p><a href="web-module/users">Check out my UberMegaServlet!</a></p>
 </body>
 </html>

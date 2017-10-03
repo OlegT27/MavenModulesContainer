@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class MyOwnServlet extends HttpServlet {
     static final String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
@@ -20,9 +22,16 @@ public class MyOwnServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DatabaseAccess accessObject = new DatabaseAccess(postgresURL,login,password);
-        logger.debug(postgresURL + login + password);
+        logger.debug(postgresURL+" " +login +" " + password);
         // on SELECT *
-        req.setAttribute("viewObject",accessObject.getAllData());
+        try {
+            List<DatabaseObject> allData = accessObject.getAllData();
+            req.setAttribute("viewObject",allData);
+        } catch (SQLException e) {
+            logger.debug("SQLException",e);
+        } catch (ClassNotFoundException e) {
+            logger.debug("CNFException",e);
+        }
         req.getRequestDispatcher("users.jsp").forward(req, resp);
         // =================
     }
@@ -35,7 +44,7 @@ public class MyOwnServlet extends HttpServlet {
         DatabaseObject data = new DatabaseObject();
 
         data = (DatabaseObject) req.getAttribute("viewObject");
-        accessObject.addData(data);
+        //accessObject.addData(data);
 
         req.setAttribute("viewObject", data);
         req.getRequestDispatcher("users.jsp").forward(req, resp);

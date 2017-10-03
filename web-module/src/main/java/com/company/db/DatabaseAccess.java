@@ -1,5 +1,8 @@
 package com.company.db;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -9,7 +12,7 @@ import java.util.List;
 import static java.nio.file.Files.readAllLines;
 
 public class DatabaseAccess {
-
+    private Logger logger = LoggerFactory.getLogger(DatabaseAccess.class);
     private String connectionURL;
     private String username;
     private String password;
@@ -51,17 +54,14 @@ public class DatabaseAccess {
         this.password = password;
     }
 
-    private Connection connectDB() throws SQLException {
-        try {
+    public Connection connectDB() throws SQLException,ClassNotFoundException {
+
             Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         Connection conn = DriverManager.getConnection(connectionURL, username, password);
         return conn;
     }
 
-    public boolean executeSQLFromFile(String fileName) {
+    /*public boolean executeSQLFromFile(String fileName) {
 
         try {
             Statement state = this.connectDB().createStatement();
@@ -75,17 +75,18 @@ public class DatabaseAccess {
             state.executeUpdate(sqlQuerry);
 
         } catch (SQLException e) {
+            logger.error(String.valueOf(e.getStackTrace()));
             return false;
         } catch (IOException e) {
+            logger.error(String.valueOf(e.getStackTrace()));
             return false;
         }
         return true;
 
-    }
+    }*/
 
-    public List<DatabaseObject> getAllData() {
+    public List<DatabaseObject> getAllData() throws SQLException,ClassNotFoundException {
         List<DatabaseObject> dataList = new ArrayList<DatabaseObject>();
-        try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
             ResultSet resultSet = state.executeQuery("SELECT * FROM USERS");
@@ -100,13 +101,9 @@ public class DatabaseAccess {
                 dataList.add(record);
             }
             return dataList;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
-    }
 
-    public boolean deleteUser(DatabaseObject record) {
+   /* public boolean deleteUser(DatabaseObject record) {
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
@@ -115,7 +112,7 @@ public class DatabaseAccess {
 
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(String.valueOf(e.getStackTrace()));
             return false;
         }
     }
@@ -130,11 +127,11 @@ public class DatabaseAccess {
             state.executeUpdate(sqlQuerry);
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(String.valueOf(e.getStackTrace()));
             return false;
         }
 
-    }
+    }*/
 
 
    /* public static void main(String[] args) {

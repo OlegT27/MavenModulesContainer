@@ -52,6 +52,11 @@ public class DatabaseAccess {
     }
 
     private Connection connectDB() throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         Connection conn = DriverManager.getConnection(connectionURL, username, password);
         return conn;
     }
@@ -78,7 +83,7 @@ public class DatabaseAccess {
 
     }
 
-    private List<DatabaseObject> getAllData() {
+    public List<DatabaseObject> getAllData() {
         List<DatabaseObject> dataList = new ArrayList<DatabaseObject>();
         try {
             Connection connection = this.connectDB();
@@ -101,12 +106,12 @@ public class DatabaseAccess {
         }
     }
 
-    private boolean deleteUser(DatabaseObject record) {
+    public boolean deleteUser(DatabaseObject record) {
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
             state.executeUpdate("UPDATE USERS SET USER_EXIST = 'FALSE' " +
-                    "WHERE USER_ID =" + 1); // wtf
+                    "WHERE USER_ID =" +record.getId());
 
             return true;
         } catch (SQLException e) {
@@ -115,7 +120,7 @@ public class DatabaseAccess {
         }
     }
 
-    private boolean addData(DatabaseObject record) {
+    public boolean addData(DatabaseObject record) {
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
@@ -132,7 +137,7 @@ public class DatabaseAccess {
     }
 
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
         String login = "postgres";
         String password = "megapass";
@@ -163,7 +168,7 @@ public class DatabaseAccess {
         //fileName = "C:\\CREATE_TABLE.sql";
         // dao.executeSQLFromFile(fileName);
 
-    }
+    }*/
 }
 
 

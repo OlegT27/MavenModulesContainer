@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.company.db.DatabaseObject" %><%--
   Created by IntelliJ IDEA.
   User: olego
   Date: 26.09.2017
@@ -29,7 +30,25 @@
     </p>
 </form>
 <table>
-
+    <caption>Users List</caption>
+    <tr>
+        <th>user_id</th>
+        <th>user_name</th>
+        <th>user_surname</th>
+        <th>user_patr</th>
+        <th>user_bdate</th>
+    </tr>
+    <%
+        List<DatabaseObject> viewData = (List) request.getAttribute("viewData");
+        for (DatabaseObject obj : viewData) {%>
+    <tr>
+        <td><%=obj.getId()%></td>
+        <td><%=obj.getName()%></td>
+        <td><%=obj.getSurname()%></td>
+        <td><%=obj.getPatron()%></td>
+        <td><%=obj.getBirthDate()%></td>
+    </tr>
+    <%}%>
 </table>
 </body>
 </html>

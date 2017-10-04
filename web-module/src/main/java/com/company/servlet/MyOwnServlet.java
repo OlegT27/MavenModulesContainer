@@ -1,7 +1,7 @@
 package com.company.servlet;
 
 import com.company.db.DatabaseAccess;
-import com.company.db.DatabaseObject;
+import com.company.db.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,34 +22,52 @@ public class MyOwnServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DatabaseAccess accessObject = new DatabaseAccess(postgresURL,login,password);
-        logger.debug(postgresURL+" " +login +" " + password);
-        // on SELECT *
+        DatabaseAccess accessObject = new DatabaseAccess(postgresURL, login, password);
         try {
-            List<DatabaseObject> allData = accessObject.getAllData();
-            req.setAttribute("viewObject",allData);
+
+            // =================
+            // SELECT *
+            //List<User> allData = accessObject.getAllData();
+            List<User> allData = accessObject.getLivingPeople();
+            req.setAttribute("userList", allData);
+            // =================
+            req.getRequestDispatcher("users.jsp").forward(req, resp);
         } catch (SQLException e) {
-            logger.debug("SQLException",e);
+            logger.error("SQLException",e);
+
         } catch (ClassNotFoundException e) {
-            logger.debug("CNFException",e);
+            logger.error("ClassNotFoundException",e);
+
         }
-        req.getRequestDispatcher("users.jsp").forward(req, resp);
-        // =================
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        DatabaseAccess accessObject = new DatabaseAccess(postgresURL, login, password);
+        try {
+            // INSERT
+            if (req.getRequestURI().contains("/users/add")) {
+                User userToAdd = new User();
 
-        // on INSERT
-        DatabaseAccess accessObject = new DatabaseAccess(postgresURL,login,password);
-        DatabaseObject data = new DatabaseObject();
+                userToAdd.setName(req.getParameter("user_name"));
+                userToAdd.setSurname(req.getParameter("user_sname"));
+                userToAdd.setPatron(req.getParameter("user_patr"));
+                userToAdd.setBirthDate(Date.valueOf((req.getParameter("user_date"))));
 
-        data = (DatabaseObject) req.getAttribute("viewObject");
-        //accessObject.addData(data);
+                accessObject.addData(userToAdd);
+                resp.sendRedirect("/webmodule/users");
+            }
+            //DELETE
+            if (req.getRequestURI().contains("/users/delete")) {
+                Integer idToDelete = Integer.valueOf(req.getParameter("idToDelete"));
+                accessObject.deleteUser(idToDelete);
+                resp.sendRedirect("/webmodule/users");
 
-        req.setAttribute("viewObject", data);
-        req.getRequestDispatcher("users.jsp").forward(req, resp);
-        // ===================
+            }
 
+        } catch (ClassNotFoundException e) {
+            logger.error("ClassNotFoundException",e);
+
+        }
     }
 }

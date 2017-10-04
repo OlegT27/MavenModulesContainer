@@ -5,11 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.nio.file.Files.readAllLines;
 
 public class DatabaseAccess {
     private Logger logger = LoggerFactory.getLogger(DatabaseAccess.class);
@@ -54,70 +53,90 @@ public class DatabaseAccess {
         this.password = password;
     }
 
-    public Connection connectDB() throws SQLException,ClassNotFoundException {
+    public Connection connectDB() throws SQLException, ClassNotFoundException {
 
-            Class.forName("org.postgresql.Driver");
+        Class.forName("org.postgresql.Driver");
         Connection conn = DriverManager.getConnection(connectionURL, username, password);
         return conn;
     }
 
-    /*public boolean executeSQLFromFile(String fileName) {
+    @Deprecated
+    public boolean executeSQLFromFile(String fileName) {
 
         try {
             Statement state = this.connectDB().createStatement();
             String sqlQuerry = new String();
-            for (String sqlLine :
-                    readAllLines(Paths.get(fileName))) {
+            for (String sqlLine : Files.readAllLines(Paths.get(fileName))) {
                 sqlQuerry += sqlLine;
                 System.out.println(sqlLine);
+                state.executeUpdate(sqlQuerry);
             }
-
-            state.executeUpdate(sqlQuerry);
-
         } catch (SQLException e) {
-            logger.error(String.valueOf(e.getStackTrace()));
+            logger.error("SQLException",e);
             return false;
         } catch (IOException e) {
-            logger.error(String.valueOf(e.getStackTrace()));
+            logger.error("IOException",e);
+            return false;
+        } catch (ClassNotFoundException e) {
+            logger.error("ClassNotFoundException",e);
             return false;
         }
         return true;
 
-    }*/
-
-    public List<DatabaseObject> getAllData() throws SQLException,ClassNotFoundException {
-        List<DatabaseObject> dataList = new ArrayList<DatabaseObject>();
-            Connection connection = this.connectDB();
-            Statement state = connection.createStatement();
-            ResultSet resultSet = state.executeQuery("SELECT * FROM USERS");
-            while (resultSet.next()) {
-                DatabaseObject record = new DatabaseObject();
-                record.setId(resultSet.getInt("USER_ID"));
-                record.setName(resultSet.getString("USER_NAME"));
-                record.setSurname(resultSet.getString("USER_SNAME"));
-                record.setPatron(resultSet.getString("USER_PATR"));
-                record.setBirthDate(resultSet.getDate("USER_BDATE"));
-                record.setExist(resultSet.getBoolean("USER_EXIST"));
-                dataList.add(record);
-            }
-            return dataList;
+    }
+    @Deprecated
+    public List<User> getAllData() throws SQLException, ClassNotFoundException {
+        List<User> dataList = new ArrayList<User>();
+        Connection connection = this.connectDB();
+        Statement state = connection.createStatement();
+        ResultSet resultSet = state.executeQuery("SELECT * FROM USERS");
+        while (resultSet.next()) {
+            User record = new User();
+            record.setId(resultSet.getInt("USER_ID"));
+            record.setName(resultSet.getString("USER_NAME"));
+            record.setSurname(resultSet.getString("USER_SNAME"));
+            record.setPatron(resultSet.getString("USER_PATR"));
+            record.setBirthDate(resultSet.getDate("USER_BDATE"));
+            record.setExist(resultSet.getBoolean("USER_EXIST"));
+            dataList.add(record);
         }
+        connection.close();
+        return dataList;
+    }
+    public List<User> getLivingPeople() throws SQLException, ClassNotFoundException {
+        List<User> dataList = new ArrayList<User>();
+        Connection connection = this.connectDB();
+        Statement state = connection.createStatement();
+        ResultSet resultSet = state.executeQuery("SELECT * FROM USERS WHERE USER_EXIST = TRUE");
+        while (resultSet.next()) {
+            User record = new User();
+            record.setId(resultSet.getInt("USER_ID"));
+            record.setName(resultSet.getString("USER_NAME"));
+            record.setSurname(resultSet.getString("USER_SNAME"));
+            record.setPatron(resultSet.getString("USER_PATR"));
+            record.setBirthDate(resultSet.getDate("USER_BDATE"));
+            record.setExist(resultSet.getBoolean("USER_EXIST"));
+            dataList.add(record);
+        }
+        connection.close();
+        return dataList;
+    }
 
-   /* public boolean deleteUser(DatabaseObject record) {
+   public boolean deleteUser(Integer id) throws ClassNotFoundException {
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
             state.executeUpdate("UPDATE USERS SET USER_EXIST = 'FALSE' " +
-                    "WHERE USER_ID =" +record.getId());
-
+                    "WHERE USER_ID =" +id);
+            connection.close();
             return true;
         } catch (SQLException e) {
-            logger.error(String.valueOf(e.getStackTrace()));
+            logger.error("SQLException",e);
             return false;
         }
     }
 
-    public boolean addData(DatabaseObject record) {
+    public boolean addData(User record) throws ClassNotFoundException {
         try {
             Connection connection = this.connectDB();
             Statement state = connection.createStatement();
@@ -125,47 +144,15 @@ public class DatabaseAccess {
             sqlQuerry += record.getName() + "','" + record.getSurname() + "','" + record.getPatron() + "','" + record.getBirthDate() + "');";
             System.out.println(sqlQuerry);
             state.executeUpdate(sqlQuerry);
+            connection.close();
             return true;
         } catch (SQLException e) {
-            logger.error(String.valueOf(e.getStackTrace()));
+            logger.error("SQLException",e);
             return false;
         }
 
-    }*/
+    }
 
-
-   /* public static void main(String[] args) {
-        String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
-        String login = "postgres";
-        String password = "megapass";
-        String fileName = "C:\\DROP_TABLE.sql";
-        DatabaseAccess dao = new DatabaseAccess(postgresURL, login, password);
-        DatabaseObject object = new DatabaseObject();
-        dao.executeSQLFromFile(fileName);
-        fileName = "C:\\CREATE_TABLE.sql";
-        dao.executeSQLFromFile(fileName);
-        object.setName("Oleg");
-        object.setSurname("Oleg");
-        object.setPatron("Oleg");
-        object.setBirthDate(Date.valueOf("1994-05-22"));
-        dao.addData(object);
-        List<DatabaseObject> list = dao.getAllData();
-        for (DatabaseObject l : list) {
-            System.out.println(l.getId() + l.getBirthDate().toString() + l.getName() + l.getExist());
-        }
-        list.clear();
-        dao.deleteUser(object);
-        list = dao.getAllData();
-        for (DatabaseObject l : list) {
-            System.out.println(l.getId() + l.getBirthDate().toString() + l.getName() + l.getExist());
-        }
-
-
-        //dao.executeSQLFromFile(fileName);
-        //fileName = "C:\\CREATE_TABLE.sql";
-        // dao.executeSQLFromFile(fileName);
-
-    }*/
 }
 
 

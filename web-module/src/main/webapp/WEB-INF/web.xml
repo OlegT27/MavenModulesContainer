@@ -12,10 +12,17 @@
         <servlet-name>usersServlet</servlet-name>
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>usersServlet</servlet-name>
+        <url-pattern>/users/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>usersServlet</servlet-name>
+        <url-pattern>/users/delete</url-pattern>
+    </servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+<welcome-file-list>
+        <welcome-file>users</welcome-file>
+</welcome-file-list>
 </web-app>
 

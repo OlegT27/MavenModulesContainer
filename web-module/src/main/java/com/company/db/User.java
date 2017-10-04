@@ -2,7 +2,7 @@ package com.company.db;
 
 import java.sql.Date;
 
-public class DatabaseObject {
+public class User {
     private String name;
     private String surname;
     private String patron;

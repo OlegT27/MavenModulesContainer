@@ -44,12 +44,17 @@ public class MyOwnServlet extends HttpServlet {
             userToAdd.setName(req.getParameter("user_name"));
             userToAdd.setSurname(req.getParameter("user_sname"));
             userToAdd.setPatron(req.getParameter("user_patr"));
+            // some of the fields are empty
+            if ((userToAdd.getName().equals("")) || (userToAdd.getSurname().equals("")) || (userToAdd.getPatron().equals(""))) {
+                isCorrupted = true;
+                // this stuff we can use at view to alert that data didn't added
+                req.setAttribute("dataNotAdded", true);
+            }
             // error occur while convert string to data
-
             try {
                 userToAdd.setBirthDate(Date.valueOf((req.getParameter("user_date"))));
             } catch (IllegalArgumentException e) {
-                req.setAttribute("invalidDate", true);
+                req.setAttribute("dataNotAdded", true);
                 isCorrupted = true;
             }
             if (!isCorrupted)

@@ -4,15 +4,13 @@ import com.company.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/*import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;*/
 
 public class MyUserDAO extends GenericDAO<User> {
 
@@ -25,11 +23,13 @@ public class MyUserDAO extends GenericDAO<User> {
     @Override
     public boolean addData(User record) {
         try (Connection connection = this.getDBConnection()) {
-            Statement state = connection.createStatement();
-            state.executeUpdate("INSERT INTO USERS " +
-                    "(USER_NAME,USER_SNAME,USER_PATR,USER_BDATE) " +
-                    "VALUES('" + record.getName() + "','" + record.getSurname() +
-                    "','" + record.getPatron() + "','" + record.getBirthDate() + "');");
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("INSERT INTO USERS(USER_NAME,USER_SNAME,USER_PATR,USER_BDATE) VALUES (?,?,?,?);");
+            preparedStatement.setString(1, record.getName());
+            preparedStatement.setString(2, record.getSurname());
+            preparedStatement.setString(3, record.getPatron());
+            preparedStatement.setDate(4, record.getBirthDate());
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             logger.error("SQL exception at addData", e);
@@ -43,9 +43,10 @@ public class MyUserDAO extends GenericDAO<User> {
     @Override
     public boolean deleteData(int id) {
         try (Connection connection = this.getDBConnection()) {
-            Statement state = connection.createStatement();
-            state.executeQuery("DELETE FROM USERS " +
-                    "WHERE USER_ID =" + id);
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("DELETE FROM USERS WHERE USER_ID =?;");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             logger.error("SQL exception at deleteData", e);
@@ -65,9 +66,10 @@ public class MyUserDAO extends GenericDAO<User> {
     @Override
     public User getDataById(int id) {
         try (Connection connection = this.getDBConnection()) {
-            Statement state = connection.createStatement();
-            ResultSet rs = state.executeQuery("SELECT * FROM USERS " +
-                    "WHERE USER_ID =" + id);
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM USERS WHERE USER_ID = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
             User record = new User();
             // some keys which equal
             if (rs.getMetaData().getColumnCount() > 1)
@@ -88,7 +90,7 @@ public class MyUserDAO extends GenericDAO<User> {
         }
     }
 
-    public boolean executeSQLFromFile(String fileName) {
+    /*public boolean executeSQLFromFile(String fileName) {
         try (Statement state = this.getDBConnection().createStatement()) {
             String sqlQuery = new String();
             for (String sqlLine : Files.readAllLines(Paths.get(fileName))) {
@@ -107,14 +109,14 @@ public class MyUserDAO extends GenericDAO<User> {
         }
         return true;
 
-    }
+    }*/
 
     public List<User> getUsersWhoExist() {
         List<User> dataList = new ArrayList<User>();
         try (Connection connection = this.getDBConnection()) {
             Statement state = connection.createStatement();
-            ResultSet resultSet = state.executeQuery("SELECT * FROM USERS " +
-                    "WHERE USER_EXIST = TRUE");
+            ResultSet resultSet = state.executeQuery
+                    ("SELECT * FROM USERS WHERE USER_EXIST = TRUE;");
             while (resultSet.next()) {
                 User record = new User();
                 record.setId(resultSet.getInt("USER_ID"));
@@ -137,9 +139,9 @@ public class MyUserDAO extends GenericDAO<User> {
 
     public boolean setUserAsDeleted(int id) {
         try (Connection connection = this.getDBConnection()) {
-            Statement state = connection.createStatement();
-            state.executeUpdate("UPDATE USERS SET USER_EXIST = 'FALSE' " +
-                    "WHERE USER_ID =" + id);
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("UPDATE USERS SET USER_EXIST = 'FALSE' WHERE USER_ID = ?;");
+            preparedStatement.setInt(1, id);
             return true;
         } catch (SQLException e) {
             logger.error("SQL exception at setUserAsDeleted", e);

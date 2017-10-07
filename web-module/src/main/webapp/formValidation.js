@@ -8,7 +8,3 @@ function validate(formName) {
     }
     document.forms[formName].submit();
 }
-
-function invalidData() {
-    alert("invalid Data format!");
-}

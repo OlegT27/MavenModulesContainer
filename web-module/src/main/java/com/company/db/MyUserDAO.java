@@ -142,6 +142,7 @@ public class MyUserDAO extends GenericDAO<User> {
             PreparedStatement preparedStatement = connection.prepareStatement
                     ("UPDATE USERS SET USER_EXIST = 'FALSE' WHERE USER_ID = ?;");
             preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             logger.error("SQL exception at setUserAsDeleted", e);

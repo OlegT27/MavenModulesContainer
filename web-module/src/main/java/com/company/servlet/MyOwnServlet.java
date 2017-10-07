@@ -25,50 +25,55 @@ public class MyOwnServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // =================
-        // SELECT *
-        //List<User> allData = accessObject.getAllData();
-        // SELECT IS_EXIST users
         List<User> allData = accessObject.getAllData();
         req.setAttribute("userList", allData);
-        // =================
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // INSERT
-        if (req.getRequestURI().contains("/users/add")) {
-            User userToAdd = new User();
-            boolean isCorrupted = false;
-            userToAdd.setName(req.getParameter("user_name"));
-            userToAdd.setSurname(req.getParameter("user_sname"));
-            userToAdd.setPatron(req.getParameter("user_patr"));
-            // some of the fields are empty
-            if ((userToAdd.getName().equals("")) || (userToAdd.getSurname().equals("")) || (userToAdd.getPatron().equals(""))) {
-                isCorrupted = true;
-                // this stuff we can use at view to alert that data didn't added
-                req.setAttribute("dataNotAdded", true);
-            }
-            // error occur while convert string to data
+        if (req.getRequestURI().contains("/add")) {
             try {
-                userToAdd.setBirthDate(Date.valueOf((req.getParameter("user_date"))));
-            } catch (IllegalArgumentException e) {
-                req.setAttribute("dataNotAdded", true);
-                isCorrupted = true;
+                accessObject.addData(inputDataValidation(req));
+            } catch (NullPointerException e) {
+                req.setAttribute("dataNotValid", true);
+                req.getRequestDispatcher("users.jsp").forward(req, resp);
             }
-            if (!isCorrupted)
-                accessObject.addData(userToAdd);
-            resp.sendRedirect("/webmodule/users");
+            resp.sendRedirect("/webmodule");
         }
         //DELETE
-        if (req.getRequestURI().contains("/users/delete")) {
+        if (req.getRequestURI().contains("/delete")) {
             User userToDel = new User();
             userToDel.setId(Integer.valueOf(req.getParameter("userId")));
             accessObject.updateData(userToDel);
-            resp.sendRedirect("/webmodule/users");
+            resp.sendRedirect("/webmodule");
 
         }
+
+
+    }
+
+    public User inputDataValidation(HttpServletRequest req) {
+        User userToAdd = new User();
+
+        userToAdd.setName(req.getParameter("user_name"));
+        userToAdd.setSurname(req.getParameter("user_sname"));
+        userToAdd.setPatron(req.getParameter("user_patr"));
+
+        // some of the fields are empty
+        if ((userToAdd.getName().equals(""))
+                || (userToAdd.getSurname().equals(""))
+                || (userToAdd.getPatron().equals(""))) {
+            return null;
+        }
+        // error occur while convert string to data
+        try {
+            userToAdd.setBirthDate(Date.valueOf((req.getParameter("user_date"))));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+        return userToAdd;
 
     }
 }

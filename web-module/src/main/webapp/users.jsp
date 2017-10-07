@@ -12,11 +12,16 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="formValidation.js"></script>
 </head>
 <body>
-<form action="users/add" method="post" name="addUser">
+
+<form action="add" method="post" name="addUser">
     <table>
+        <tr>
+            <c:if test="${dataNotValid == true}">
+                <font color="red"><c:out value="Fields are empty or invalid data format submitted"/></font>
+            </c:if>
+        </tr>
         <tr>
             <td><label for="name"> Name</label></td>
             <td><input type="text" placeholder="Name" id="name" name="user_name"></td>
@@ -32,16 +37,17 @@
         </tr>
         <tr>
             <td><label for="bdate">Date of birth</label></td>
-            <td><input type="text" placeholder="yyyy-mm-dd" id="bdate" name="user_date" required
+            <td><input type="text" placeholder="yyyy-mm-dd" id="bdate" name="user_date"
                        pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></td>
         </tr>
         <tr>
-            <td><input type="button" title="Submit" value="Submit" onclick="validate('addUser')"></td>
+            <td><input type="submit" title="Submit" value="Submit">
+            </td>
         </tr>
     </table>
 </form>
 
-<form action="/users" method="get" id="listUser">
+<form action="/" method="get" id="listUser">
     <table>
         <caption>Users List</caption>
         <tr>
@@ -58,7 +64,7 @@
                 <td><c:out value="${user.getSurname()}"/></td>
                 <td><c:out value="${user.getPatron()}"/></td>
                 <td><c:out value="${user.getBirthDate()}"/></td>
-                <td><input type="submit" value="delete" formaction="users/delete" formmethod="post"></td>
+                <td><input type="submit" value="delete" formaction="delete" formmethod="post"></td>
                 <td><input type=hidden value="${user.getId()}" name="userId" readonly></td>
             </tr>
         </c:forEach>

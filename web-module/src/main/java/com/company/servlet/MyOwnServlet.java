@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyOwnServlet extends HttpServlet {
     /*static final String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
@@ -28,6 +29,10 @@ public class MyOwnServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<User> allData = accessObject.getAllData();
+        // LOCALE getter
+
+        Locale locale = req.getLocale();
+        System.out.println(locale.getCountry());
         req.setAttribute("userList", allData);
         req.getRequestDispatcher("users.jsp").forward(req, resp);
     }

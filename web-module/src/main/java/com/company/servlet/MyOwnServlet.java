@@ -1,7 +1,7 @@
 package com.company.servlet;
 
-import com.company.db.GenericDAO;
-import com.company.db.MyUserDAO;
+import com.company.dao.GenericDAO;
+import com.company.dao.MyUserDAO;
 import com.company.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +15,14 @@ import java.sql.Date;
 import java.util.List;
 
 public class MyOwnServlet extends HttpServlet {
-    static final String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
+    /*static final String postgresURL = "jdbc:postgresql://127.0.0.1:5432/users_db";
     static final String login = "postgres";
     static final String password = "megapass";
-    static final String driver = "org.postgresql.Driver";
+    static final String driver = "org.postgresql.Driver";*/
+    static final String dataSource = "java:comp/env/jdbc/postgres";
+
     private Logger logger = LoggerFactory.getLogger(MyOwnServlet.class);
-    GenericDAO accessObject = new MyUserDAO(postgresURL, login, password, driver);
+    GenericDAO accessObject = new MyUserDAO(dataSource);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

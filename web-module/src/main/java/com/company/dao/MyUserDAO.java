@@ -1,9 +1,10 @@
-package com.company.db;
+package com.company.dao;
 
 import com.company.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,8 @@ public class MyUserDAO extends GenericDAO<User> {
 
     private Logger logger = LoggerFactory.getLogger(MyUserDAO.class);
 
-    public MyUserDAO(String url, String user, String password, String driver) {
-        super(url, user, password, driver);
+    public MyUserDAO(String dataSource) {
+        super(dataSource);
     }
 
     @Override
@@ -33,6 +34,9 @@ public class MyUserDAO extends GenericDAO<User> {
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
             return false;
+        } catch (NamingException e) {
+            logger.error("Can't resolve name", e);
+            return false;
         }
     }
 
@@ -49,6 +53,9 @@ public class MyUserDAO extends GenericDAO<User> {
             return false;
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
+            return false;
+        } catch (NamingException e) {
+            logger.error("Can't resolve name", e);
             return false;
         }
 
@@ -83,6 +90,9 @@ public class MyUserDAO extends GenericDAO<User> {
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
             return null;
+        } catch (NamingException e) {
+            logger.error("Can't resolve name", e);
+            return null;
         }
     }
 
@@ -102,6 +112,10 @@ public class MyUserDAO extends GenericDAO<User> {
             return false;
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
+            return false;
+        }
+        catch (NamingException e) {
+            logger.error("Can't resolve name", e);
             return false;
         }
         return true;
@@ -130,6 +144,9 @@ public class MyUserDAO extends GenericDAO<User> {
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
             return null;
+        } catch (NamingException e) {
+            logger.error("Can't resolve name", e);
+            return null;
         }
     }
 
@@ -145,6 +162,9 @@ public class MyUserDAO extends GenericDAO<User> {
             return false;
         } catch (ClassNotFoundException e) {
             logger.error("Can't find driver", e);
+            return false;
+        } catch (NamingException e) {
+            logger.error("Can't resolve name", e);
             return false;
         }
 

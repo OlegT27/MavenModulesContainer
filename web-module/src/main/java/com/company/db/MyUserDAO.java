@@ -8,10 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;*/
-
 public class MyUserDAO extends GenericDAO<User> {
 
     private Logger logger = LoggerFactory.getLogger(MyUserDAO.class);
@@ -90,13 +86,14 @@ public class MyUserDAO extends GenericDAO<User> {
         }
     }
 
-    /*public boolean executeSQLFromFile(String fileName) {
+    /*@Deprecated
+    public boolean executeSQLFromFile(String fileName) {
         try (Statement state = this.getDBConnection().createStatement()) {
             String sqlQuery = new String();
             for (String sqlLine : Files.readAllLines(Paths.get(fileName))) {
                 sqlQuery += sqlLine;
-                state.executeUpdate(sqlQuery);
             }
+            state.executeUpdate(sqlQuery);
         } catch (SQLException e) {
             logger.error("SQL exception at executeSQLFromFile", e);
             return false;
@@ -110,7 +107,6 @@ public class MyUserDAO extends GenericDAO<User> {
         return true;
 
     }*/
-
     public List<User> getUsersWhoExist() {
         List<User> dataList = new ArrayList<User>();
         try (Connection connection = this.getDBConnection()) {
@@ -160,4 +156,5 @@ public class MyUserDAO extends GenericDAO<User> {
             return user;
         return null;
     }
+
 }

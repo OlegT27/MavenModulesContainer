@@ -5,11 +5,16 @@
          version="3.0">
 
     <servlet>
-        <servlet-name>usersServlet</servlet-name>
-        <servlet-class>com.company.servlet.MyOwnServlet</servlet-class>
+        <servlet-name>springServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-config.xml</param-value>
+        </init-param>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>usersServlet</servlet-name>
+        <servlet-name>springServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 

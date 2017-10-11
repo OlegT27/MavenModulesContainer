@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: olego
@@ -12,6 +14,10 @@
     <form method="post">
         <input type="submit">
     </form>
+
+    <c:forEach var="user" items="${usersList}">
+        <tr><c:out value="${user.name}"/></tr>
+    </c:forEach>
 
 </head>
 <body>

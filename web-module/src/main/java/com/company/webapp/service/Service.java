@@ -25,5 +25,9 @@ public class Service {
         return userDao.addUser(null);
     }
 
+    public List<User> getAllUsers_alpha() {
+        return userDao.fetchData(SQLQuery.USER_SELECT_ALL.getQuery(), null);
+    }
+
 
 }

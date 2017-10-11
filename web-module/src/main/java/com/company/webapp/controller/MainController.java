@@ -25,6 +25,8 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         modelAndView.addObject("usersList", usersList);
+        userService.getAllUsers_alpha();
+        System.out.println("service_my dao call from on get");
         return modelAndView;
     }
 

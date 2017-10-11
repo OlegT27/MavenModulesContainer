@@ -25,4 +25,19 @@ public class DAO {
     public boolean delUser(User user) {
         return true;
     }
+
+    public List<User> addData(String sqlQuery, Object value) {
+        System.out.println(sqlQuery);
+        return null;
+    }
+
+    public boolean modifyData(String sqlQuery, Object value) {
+        System.out.println(sqlQuery);
+        return true;
+    }
+
+    public List<User> fetchData(String sqlQuery, Object value) {
+        System.out.println(sqlQuery);
+        return null;
+    }
 }

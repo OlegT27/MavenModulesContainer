@@ -1,7 +1,7 @@
 package com.company.webapp.service;
 
 
-import com.company.webapp.dao.DAO;
+import com.company.webapp.dao.GenericDao;
 import com.company.webapp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,23 +11,15 @@ import java.util.List;
 public class Service {
 
     @Autowired
-    private DAO userDao;
+    private GenericDao dao;
+
 
     public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        return dao.selectData(SQLQuery.USER_SELECT_ALL.getQuery());
     }
 
-    public boolean delUser(User user) {
-        return userDao.delUser(null);
+    public List<User> getAllExistUsers() {
+        return dao.selectData(SQLQuery.USER_SELECT_IF_EXISTS.getQuery());
     }
-
-    public boolean addUser(User user) {
-        return userDao.addUser(null);
-    }
-
-    public List<User> getAllUsers_alpha() {
-        return userDao.fetchData(SQLQuery.USER_SELECT_ALL.getQuery(), null);
-    }
-
 
 }

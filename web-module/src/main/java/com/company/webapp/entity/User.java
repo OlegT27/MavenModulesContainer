@@ -10,6 +10,18 @@ public class User {
     private Boolean exist;
     private Integer id;
 
+    public User() {
+    }
+
+    public User(String name, String surname, String patron, Date birthDate, Boolean exist, Integer id) {
+        this.name = name;
+        this.surname = surname;
+        this.patron = patron;
+        this.birthDate = birthDate;
+        this.exist = exist;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

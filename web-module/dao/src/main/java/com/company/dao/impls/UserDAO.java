@@ -15,7 +15,7 @@ public class UserDAO implements GenericDAO<User> {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserDAO(DataSource dataSource) {
+    public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

@@ -9,12 +9,12 @@ public class Order {
     private Date date;
     private Integer userId;
 
-    public Order(Integer id, String name, Date date, Integer userId) {
+   /* public Order(Integer id, String name, Date date, Integer userId) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.userId = userId;
-    }
+    }*/
 
     public Integer getId() {
         return id;

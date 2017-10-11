@@ -15,7 +15,7 @@ public class OrderDAO implements GenericDAO<Order> {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public OrderDAO(DataSource dataSource) {
+    public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

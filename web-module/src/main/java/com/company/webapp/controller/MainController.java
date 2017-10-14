@@ -2,12 +2,11 @@
 package com.company.webapp.controller;
 
 import com.company.webapp.entity.User;
+import com.company.webapp.service.datamanager.OrderDataManager;
 import com.company.webapp.service.datamanager.UserDataManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -15,6 +14,8 @@ public class MainController {
 
     @Autowired
     private UserDataManager userDataManager;
+    @Autowired
+    private OrderDataManager orderDataManager;
 
 
     @GetMapping("/")
@@ -41,5 +42,15 @@ public class MainController {
         // get empty user! fail
         userDataManager.markUserNotExist(user);
         return "redirect:/";
+    }
+
+    @RequestMapping("/update")
+    ModelAndView onUpdate(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userToUpdate", userDataManager.getUserById(id));
+        modelAndView.addObject("ordersList", orderDataManager.getOrderByUser(id));
+        modelAndView.setViewName("service");
+
+        return modelAndView;
     }
 }

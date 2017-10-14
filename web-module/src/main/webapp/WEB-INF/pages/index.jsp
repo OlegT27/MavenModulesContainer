@@ -39,23 +39,17 @@
 </table>
 <table>
     <caption>Users List</caption>
-    <tr>
-        <th>Surname</th>
-        <th>Name</th>
-        <th>Patronymic</th>
-        <th>Birth date</th>
-    </tr>
-
     <c:forEach var="user" items="${usersList}">
         <s:form modelAttribute="userToDel" action="/webapp/delete" method="post">
+
             <tr>
                 <s:hidden path="id" value="${user.id}"/>
-                <td><c:out value="${user.surname}"/></td>
-                <td><c:out value="${user.name}"/></td>
-                <td><c:out value="${user.patron}"/></td>
-                <td><c:out value="${user.birthDate}"/></td>
+
+                <td><a href="${pageContext.request.contextPath}/update?id=${user.id}">${user}</a></td>
                 <td><s:button>Delete</s:button></td>
+                <td></td>
             </tr>
+
         </s:form>
     </c:forEach>
 

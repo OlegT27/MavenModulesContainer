@@ -14,7 +14,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setOrderId(resultSet.getInt("ORDER_ID"));
         order.setName(resultSet.getString("ORDER_NAME"));
         order.setCreateDate(resultSet.getDate("ORDER_ADDDATE"));
-        order.setUserId(resultSet.getInt("ORDER_NAME"));
+        order.setUserId(resultSet.getInt("USER_ID"));
         return order;
     }
 }

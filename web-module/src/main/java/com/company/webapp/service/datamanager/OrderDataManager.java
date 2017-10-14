@@ -36,4 +36,8 @@ public class OrderDataManager {
         return orderDAO.updateData(SQLQuery.ORDER_UPDATE.getQuery(), order.getName(), order.getOrderId());
     }
 
+    public List<Order> getOrderByUser(int key) {
+        return orderDAO.selectData(SQLQuery.ORDER_SELECT_BY_USER.getQuery(), key);
+    }
+
 }

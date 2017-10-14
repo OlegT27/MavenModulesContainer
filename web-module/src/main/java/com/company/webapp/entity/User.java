@@ -22,6 +22,12 @@ public class User {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return surname + ' ' + name + ' ' +
+                patron + ' ' + birthDate;
+    }
+
     public String getName() {
         return name;
     }

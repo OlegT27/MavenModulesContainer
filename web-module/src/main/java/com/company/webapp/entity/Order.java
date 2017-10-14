@@ -19,6 +19,15 @@ public class Order {
         this.userId = userId;
     }
 
+    @Override
+    public String toString() {
+        return orderId + ' ' +
+                name + ' ' +
+                createDate + ' ' +
+                userId
+                ;
+    }
+
     public Integer getOrderId() {
         return orderId;
     }

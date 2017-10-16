@@ -2,7 +2,6 @@ package com.company.webapp.service.datamanager;
 
 import com.company.webapp.dao.GenericDao;
 import com.company.webapp.entity.Order;
-import com.company.webapp.service.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class OrderDataManager {
     }
 
     public boolean insertOrder(Order order) {
-        return orderDAO.updateData(SQLQuery.ORDER_INSERT.getQuery(), order.getName());
+        return orderDAO.updateData(SQLQuery.ORDER_INSERT.getQuery(), order.getName(), order.getCreateDate(), order.getUserId());
     }
 
     public boolean updateOrder(Order order) {

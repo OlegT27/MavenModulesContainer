@@ -2,12 +2,18 @@
 package com.company.webapp.controller;
 
 import com.company.webapp.entity.User;
+import com.company.webapp.service.Validator;
 import com.company.webapp.service.datamanager.OrderDataManager;
 import com.company.webapp.service.datamanager.UserDataManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -16,41 +22,50 @@ public class MainController {
     private UserDataManager userDataManager;
     @Autowired
     private OrderDataManager orderDataManager;
+    @Autowired
+    private Validator validator;
 
 
     @GetMapping("/")
-    public ModelAndView onGet() {
-        System.out.println("catch get");
+    public ModelAndView getUsersListView() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
-        modelAndView.addObject("userToAdd", new User());
-        modelAndView.addObject("userToDel", new User());
+        modelAndView.addObject("userToSubmit", new User());
+        modelAndView.addObject("currentUser", new User());
         modelAndView.addObject("usersList", userDataManager.getAllExistUsers());
         return modelAndView;
     }
 
     @PostMapping("/add")
-    public String onPost(@ModelAttribute("userToAdd") User user) {
-        System.out.println("catch post add");
-        userDataManager.insertUser(user);
+    public String addUser(@ModelAttribute("userToSubmit") User user) {
+        if (validator.dataValidator(new String[]{user.getName(), user.getPatron(), user.getSurname()}, user.getBirthDate()))
+            userDataManager.insertUser(user);
         return "redirect:/";
     }
 
     @PostMapping("/delete")
-    public String onDelete(@ModelAttribute("userToDel") User user) {
-        System.out.println("catch post del");
-        // get empty user! fail
+    public String deleteUser(@ModelAttribute("currentUser") User user) {
         userDataManager.markUserNotExist(user);
         return "redirect:/";
     }
 
-    @RequestMapping("/update")
-    ModelAndView onUpdate(@RequestParam int id) {
+    @GetMapping("/update")
+    ModelAndView getUpdateView(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userToUpdate", userDataManager.getUserById(id));
-        modelAndView.addObject("ordersList", orderDataManager.getOrderByUser(id));
-        modelAndView.setViewName("service");
-
+        List<User> users = userDataManager.getUserById(id);
+        modelAndView.addObject("userToUpdate", users.get(0));
+        modelAndView.setViewName("user");
         return modelAndView;
     }
+
+    @PostMapping("/update_user")
+    ModelAndView updateUser(@ModelAttribute("userToUpdate") User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        userDataManager.updateUser(user);
+        modelAndView.setViewName("user");
+        return modelAndView;
+
+
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.company.webapp.service;
+package com.company.webapp.service.datamanager;
 
 public enum SQLQuery {
     //======USERS SQL=========
@@ -13,7 +13,7 @@ public enum SQLQuery {
     //======ORDERS SQL=========
     ORDER_SELECT_ALL("SELECT * FROM ORDERS;"),
     ORDER_DELETE("DELETE FROM ORDERS WHERE ORDER_ID =?;"),
-    ORDER_INSERT("INSERT INTO ORDERS(ORDER_NAME) VALUES (?);"),
+    ORDER_INSERT("INSERT INTO ORDERS(ORDER_NAME,ORDER_ADDDATE,USER_ID) VALUES (?,?,?);"),
     ORDER_UPDATE("UPDATE ORDERS SET (ORDER_NAME) = (?) WHERE ORDER_ID = ?;"),
     ORDER_SELECT_ONE("SELECT * FROM ORDERS WHERE ORDER_ID = ?;"),
     ORDER_SELECT_BY_USER("SELECT * FROM ORDERS WHERE USER_ID = ? ");

@@ -1,11 +1,10 @@
-<%@ taglib prefix="spring" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: olego
-  Date: 11.10.2017
-  Time: 19:06
+  Date: 14.10.2017
+  Time: 15:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,8 +13,9 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Update user</h1>
 <table>
-    <s:form modelAttribute="userToSubmit" method="post" action="${pageContext.request.contextPath}/add">
+    <s:form modelAttribute="userToUpdate" method="post" action="${pageContext.request.contextPath}/update_user">
         <tr>
             <td><s:label path="surname">SURNAME</s:label></td>
             <td><s:input path="surname"/></td>
@@ -35,30 +35,15 @@
         <tr>
             <td><s:button>Push User</s:button></td>
         </tr>
+        <tr>
+            <td><s:hidden path="id" value="${param.id}"/></td>
+        </tr>
     </s:form>
-</table>
-<table>
-    <caption>Users List</caption>
-    <c:forEach var="user" items="${usersList}">
-        <s:form id="userForm" modelAttribute="currentUser" action="${pageContext.request.contextPath}/delete"
-                method="post">
-            <tr>
-                <s:hidden path="id" value="${user.id}"/>
-                <td><a href="${pageContext.request.contextPath}/update?id=${user.id}">${user}</a></td>
-                <td>
-                    <s:button>
-                        Delete
-                    </s:button>
-                </td>
-                <td>
-                    <s:button form="userForm" formaction="${pageContext.request.contextPath}/orders">
-                        Orders
-                    </s:button>
-                </td>
-            </tr>
-        </s:form>
-    </c:forEach>
-
+    <td>
+        <a href="/back">
+            <button>Back</button>
+        </a>
+    </td>
 </table>
 </body>
 </html>

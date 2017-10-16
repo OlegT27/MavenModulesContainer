@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@SessionAttributes("orderUser")
+@SessionAttributes("userId")
 @Controller
 public class OrderController {
 
@@ -20,19 +20,17 @@ public class OrderController {
     private OrderDataManager orderDataManager;
 
     @RequestMapping("/orders")
-    ModelAndView getOrdersListView(@ModelAttribute("orderUser") User user) {
+    ModelAndView getOrdersListView(@ModelAttribute("userId") int key) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("ordersList", orderDataManager.getOrderByUser(user.getId()));
-        modelAndView.addObject("orderUser", user);
-        Order orderToAdd = new Order();
-        orderToAdd.setUserId(user.getId());
-        modelAndView.addObject("orderToAdd", orderToAdd);
+        modelAndView.addObject("ordersList", orderDataManager.getOrderByUser(key));
+        modelAndView.addObject("orderToAdd", new Order());
         modelAndView.setViewName("orders");
         return modelAndView;
     }
 
     @PostMapping("/add_order")
-    String addOrder(@ModelAttribute("orderToAdd") Order order) {
+    String addOrder(@ModelAttribute("orderToAdd") Order order, @ModelAttribute("userId") int key) {
+        order.setUserId(key);
         orderDataManager.insertOrder(order);
         return "forward:/orders";
     }
@@ -40,11 +38,11 @@ public class OrderController {
     @RequestMapping("/back")
     String clearSession(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
-        return "forward:/webapp";
+        return "redirect:/";
     }
 
-    @ModelAttribute("orderUser")
-    public User createSessionUser(@ModelAttribute("currentUser") User user) {
-        return user;
+    @ModelAttribute("userId")
+    public int createSessionUser(@ModelAttribute("currentUser") User user) {
+        return user.getId();
     }
 }

@@ -51,7 +51,7 @@
                     </s:button>
                 </td>
                 <td>
-                    <s:button form="userForm" formaction="${pageContext.request.contextPath}/orders">
+                    <s:button formaction="${pageContext.request.contextPath}/orders">
                         Orders
                     </s:button>
                 </td>

@@ -24,9 +24,11 @@
             <td><s:label path="createDate">DATE</s:label></td>
             <td><s:input path="createDate"/></td>
         </tr>
-        <> <s:hidden path="userId"/>
         <tr>
-            <s:button>PUSH</s:button>
+            <td>
+                <s:button>PUSH
+                </s:button>
+            <td>
         </tr>
     </s:form>
     <td>
@@ -36,9 +38,20 @@
     </td>
 </table>
 <table>
+    <caption>Orders list</caption>
     Orders
     <c:forEach var="order" items="${ordersList}">
-        <p>${order}</p>
+        <tr>
+            <td>
+                    ${order.orderId}
+            </td>
+            <td>
+                    ${order.name}
+            </td>
+            <td>
+                    ${order.createDate}
+            </td>
+        </tr>
     </c:forEach>
 </table>
 </body>

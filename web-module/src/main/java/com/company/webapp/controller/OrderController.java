@@ -42,7 +42,7 @@ public class OrderController {
     }
 
     @ModelAttribute("userId")
-    public int createSessionUser(@ModelAttribute("currentUser") User user) {
+    public int createSessionUserId(@ModelAttribute("currentUser") User user) {
         return user.getId();
     }
 }

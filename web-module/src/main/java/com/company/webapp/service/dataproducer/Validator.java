@@ -1,4 +1,4 @@
-package com.company.webapp.service;
+package com.company.webapp.service.dataproducer;
 
 import org.springframework.stereotype.Service;
 

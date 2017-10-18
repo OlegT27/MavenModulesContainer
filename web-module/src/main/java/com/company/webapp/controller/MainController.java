@@ -2,9 +2,9 @@
 package com.company.webapp.controller;
 
 import com.company.webapp.entity.User;
-import com.company.webapp.service.Validator;
 import com.company.webapp.service.datamanager.OrderDataManager;
 import com.company.webapp.service.datamanager.UserDataManager;
+import com.company.webapp.service.dataproducer.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

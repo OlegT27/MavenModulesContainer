@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="slocale" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: olego
@@ -10,38 +11,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><slocale:message code="label.updateUser"/></title>
 </head>
 <body>
-<h1>Update user</h1>
+<h1><slocale:message code="label.updateUser"/> ${userToUpdate}</h1>
+
+
 <table>
-    <s:form modelAttribute="userToUpdate" method="post" action="${pageContext.request.contextPath}/update_user">
+    <sform:form modelAttribute="userToUpdate" method="post" action="${pageContext.request.contextPath}/update_user">
         <tr>
-            <td><s:label path="surname">SURNAME</s:label></td>
-            <td><s:input path="surname"/></td>
+            <td><label><slocale:message code="label.lastName"/></label></td>
+            <td><sform:input path="surname"/></td>
         </tr>
         <tr>
-            <td><s:label path="name">NAME</s:label></td>
-            <td><s:input path="name"/></td>
+            <td><label><slocale:message code="label.firstName"/></label></td>
+            <td><sform:input path="name"/></td>
         </tr>
         <tr>
-            <td><s:label path="patron">PATRONYMIC</s:label></td>
-            <td><s:input path="patron"/></td>
+            <td><label><slocale:message code="label.patron"/></label></td>
+            <td><sform:input path="patron"/></td>
         </tr>
         <tr>
-            <td><s:label path="birthDate">BIRTH DATE</s:label></td>
-            <td><s:input path="birthDate" title="YYYY-MM-DD"/></td>
+            <td><label><slocale:message code="label.birthDate"/></label></td>
+            <td><sform:input path="birthDate" title="YYYY-MM-DD"/></td>
         </tr>
         <tr>
-            <td><s:button>Push User</s:button></td>
+            <td><sform:button><slocale:message code="button.submit"/></sform:button></td>
         </tr>
         <tr>
-            <td><s:hidden path="id" value="${param.id}"/></td>
+            <td><sform:hidden path="id" value="${param.id}"/></td>
         </tr>
-    </s:form>
+    </sform:form>
+
+
     <td>
         <a href="/back">
-            <button>Back</button>
+            <button><slocale:message code="button.back"/></button>
         </a>
     </td>
 </table>

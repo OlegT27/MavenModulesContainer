@@ -1,6 +1,6 @@
-<%@ taglib prefix="spring" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="slocale" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: olego
@@ -11,52 +11,54 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><slocale:message code="label.title"/></title>
 </head>
 <body>
+
 <table>
-    <s:form modelAttribute="userToSubmit" method="post" action="${pageContext.request.contextPath}/add">
+    <sform:form modelAttribute="userToSubmit" method="post" action="${pageContext.request.contextPath}/add">
         <tr>
-            <td><s:label path="surname">SURNAME</s:label></td>
-            <td><s:input path="surname"/></td>
+            <td><label><slocale:message code="label.lastName"/></label></td>
+            <td><sform:input path="surname"/></td>
         </tr>
         <tr>
-            <td><s:label path="name">NAME</s:label></td>
-            <td><s:input path="name"/></td>
+            <td><label><slocale:message code="label.firstName"/></label></td>
+            <td><sform:input path="name"/></td>
         </tr>
         <tr>
-            <td><s:label path="patron">PATRONYMIC</s:label></td>
-            <td><s:input path="patron"/></td>
+            <td><label><slocale:message code="label.patron"/></label></td>
+            <td><sform:input path="patron"/></td>
         </tr>
         <tr>
-            <td><s:label path="birthDate">BIRTH DATE</s:label></td>
-            <td><s:input path="birthDate" title="YYYY-MM-DD"/></td>
+            <td><label><slocale:message code="label.birthDate"/></label></td>
+            <td><sform:input path="birthDate" title="YYYY-MM-DD"/></td>
         </tr>
         <tr>
-            <td><s:button>Push User</s:button></td>
+            <td><sform:button><slocale:message code="button.submit"/></sform:button></td>
         </tr>
-    </s:form>
+    </sform:form>
 </table>
+
 <table>
-    <caption>Users List</caption>
+    <caption><slocale:message code="label.listTitle"/></caption>
     <c:forEach var="user" items="${usersList}">
-        <s:form id="userForm" modelAttribute="currentUser" action="${pageContext.request.contextPath}/delete"
-                method="post">
+        <sform:form id="userForm" modelAttribute="currentUser" action="${pageContext.request.contextPath}/delete"
+                    method="post">
             <tr>
-                <s:hidden path="id" value="${user.id}"/>
+                <sform:hidden path="id" value="${user.id}"/>
                 <td><a href="${pageContext.request.contextPath}/update?id=${user.id}">${user}</a></td>
                 <td>
-                    <s:button>
-                        Delete
-                    </s:button>
+                    <sform:button>
+                        <slocale:message code="button.delete"/>
+                    </sform:button>
                 </td>
                 <td>
-                    <s:button formaction="${pageContext.request.contextPath}/orders">
-                        Orders
-                    </s:button>
+                    <sform:button formaction="${pageContext.request.contextPath}/orders">
+                        <slocale:message code="button.orders"/>
+                    </sform:button>
                 </td>
             </tr>
-        </s:form>
+        </sform:form>
     </c:forEach>
 
 </table>

@@ -14,17 +14,15 @@
     <title><slocale:message code="label.ordersPage"/></title>
 </head>
 <body>
-<h1><slocale:message/></h1>
-
-
+<h1><slocale:message code="label.ordersPage"/></h1>
 <table>
     <sform:form modelAttribute="orderToAdd" method="post" action="${pageContext.request.contextPath}/add_order">
         <tr>
-            <td><label><slocale:message/></label></td>
+            <td><label><slocale:message code="label.orderName"/></label></td>
             <td><sform:input path="name"/></td>
         </tr>
         <tr>
-            <td><label><slocale:message/></label></td>
+            <td><label><slocale:message code="label.orderDate"/></label></td>
             <td><sform:input path="createDate"/></td>
         </tr>
         <tr>

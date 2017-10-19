@@ -6,7 +6,19 @@
 
     <mvc:annotation-driven/>
 
+    <!--
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
+    -->
+
     <context:component-scan base-package="com.company.webapp"/>
+
+    <!--
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="locale" />
+        </bean>
+    </mvc:interceptors>
+    -->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -20,4 +32,19 @@
         <property name="username" value="postgres"/>
         <property name="password" value="megapass"/>
     </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/resources/mylocale"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!--
+    <bean id="localeResolver"
+                class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en" />
+        <property name="cookieName" value="myLocaleCookie"/>
+        <property name="cookieMaxAge" value="3600"/>
+    </bean>
+    -->
+
 </beans>

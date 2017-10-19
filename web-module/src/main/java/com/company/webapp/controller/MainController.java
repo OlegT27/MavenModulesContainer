@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class MainController {
@@ -27,9 +28,10 @@ public class MainController {
 
 
     @GetMapping("/")
-    public ModelAndView getUsersListView() {
+    public ModelAndView getUsersListView(Locale locale) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
+        System.out.println(locale.getCountry());
         modelAndView.addObject("userToSubmit", new User());
         modelAndView.addObject("currentUser", new User());
         modelAndView.addObject("usersList", userDataManager.getAllExistUsers());

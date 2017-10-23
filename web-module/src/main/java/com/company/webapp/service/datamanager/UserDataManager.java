@@ -26,8 +26,9 @@ public class UserDataManager {
         return userDAO.selectData(SQLQuery.USER_SELECT_IF_EXISTS.getQuery());
     }
 
-    public List<User> getUserById(int key) {
-        return userDAO.selectData(SQLQuery.USER_SELECT_ONE.getQuery(), key);
+    public User getUserById(int key) {
+        List<User> userList = userDAO.selectData(SQLQuery.USER_SELECT_ONE.getQuery(), key);
+        return userList.get(0);
     }
 
     public boolean updateUser(User user) {

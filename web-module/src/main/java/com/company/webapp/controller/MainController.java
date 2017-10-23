@@ -2,19 +2,14 @@
 package com.company.webapp.controller;
 
 import com.company.webapp.entity.User;
-import com.company.webapp.service.datamanager.OrderDataManager;
 import com.company.webapp.service.datamanager.UserDataManager;
-import com.company.webapp.service.dataproducer.Validator;
+import com.company.webapp.service.dataproducer.UserValidator;
+import com.company.webapp.service.viewmaker.IndexViewMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class MainController {
@@ -22,26 +17,28 @@ public class MainController {
     @Autowired
     private UserDataManager userDataManager;
     @Autowired
-    private OrderDataManager orderDataManager;
-    @Autowired
-    private Validator validator;
+    private IndexViewMaker viewMaker;
 
+    @RequestMapping("/")
+    public ModelAndView getIndexPage() {
+        return viewMaker.initIndexPage("index");
 
-    @GetMapping("/")
-    public ModelAndView getUsersListView(Locale locale) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        System.out.println(locale.getCountry());
-        modelAndView.addObject("userToSubmit", new User());
-        modelAndView.addObject("currentUser", new User());
-        modelAndView.addObject("usersList", userDataManager.getAllExistUsers());
-        return modelAndView;
+    }
+
+    @RequestMapping("/users")
+    public ModelAndView getUsersList() {
+        ModelAndView model = viewMaker.initIndexPage("index");
+        return viewMaker.getUsersList(model);
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute("userToSubmit") User user) {
-        if (validator.dataValidator(new String[]{user.getName(), user.getPatron(), user.getSurname()}, user.getBirthDate()))
-            userDataManager.insertUser(user);
+    public String addUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
+
+        UserValidator validator = new UserValidator();
+        validator.validate(user, result);
+        if (result.hasErrors())
+            return "index";
+        userDataManager.insertUser(user);
         return "redirect:/";
     }
 
@@ -54,16 +51,18 @@ public class MainController {
     @GetMapping("/update")
     ModelAndView getUpdateView(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
-        List<User> users = userDataManager.getUserById(id);
-        modelAndView.addObject("userToUpdate", users.get(0));
+        modelAndView.addObject("userToUpdate", userDataManager.getUserById(id));
         modelAndView.setViewName("user");
         return modelAndView;
     }
 
     @PostMapping("/update_user")
-    ModelAndView updateUser(@ModelAttribute("userToUpdate") User user) {
+    ModelAndView updateUser(@ModelAttribute("userToUpdate") User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        userDataManager.updateUser(user);
+        UserValidator validator = new UserValidator();
+        validator.validate(user, result);
+        if (!result.hasErrors())
+            userDataManager.updateUser(user);
         modelAndView.setViewName("user");
         return modelAndView;
 

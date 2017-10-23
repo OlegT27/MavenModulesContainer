@@ -20,18 +20,22 @@
         <tr>
             <td><label><slocale:message code="label.lastName"/></label></td>
             <td><sform:input path="surname"/></td>
+            <td><sform:errors path="surname"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.firstName"/></label></td>
             <td><sform:input path="name"/></td>
+            <td><sform:errors path="name"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.patron"/></label></td>
             <td><sform:input path="patron"/></td>
+            <td><sform:errors path="patron"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.birthDate"/></label></td>
             <td><sform:input path="birthDate" title="YYYY-MM-DD"/></td>
+            <td><sform:errors path="birthDate"/></td>
         </tr>
         <tr>
             <td><sform:button><slocale:message code="button.submit"/></sform:button></td>
@@ -39,6 +43,7 @@
     </sform:form>
 </table>
 
+<a href="${pageContext.request.contextPath}/users">
 <table>
     <caption><slocale:message code="label.listTitle"/></caption>
     <c:forEach var="user" items="${usersList}">
@@ -60,7 +65,7 @@
             </tr>
         </sform:form>
     </c:forEach>
-
 </table>
+</a>
 </body>
 </html>

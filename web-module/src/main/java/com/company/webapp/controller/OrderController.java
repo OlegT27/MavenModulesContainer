@@ -3,6 +3,7 @@ package com.company.webapp.controller;
 import com.company.webapp.entity.Order;
 import com.company.webapp.entity.User;
 import com.company.webapp.service.datamanager.OrderDataManager;
+import com.company.webapp.service.viewmaker.ViewMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,18 +19,17 @@ public class OrderController {
 
     @Autowired
     private OrderDataManager orderDataManager;
+    @Autowired
+    private ViewMaker viewMaker;
 
     @RequestMapping("/orders")
-    ModelAndView getOrdersListView(@ModelAttribute("userId") int key) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("ordersList", orderDataManager.getOrderByUser(key));
-        modelAndView.addObject("orderToAdd", new Order());
-        modelAndView.setViewName("orders");
-        return modelAndView;
+    ModelAndView onOrdersPage(@ModelAttribute("userId") int key) {
+
+        return viewMaker.getOrdersPage(key, "orders");
     }
 
     @PostMapping("/add_order")
-    String addOrder(@ModelAttribute("orderToAdd") Order order, @ModelAttribute("userId") int key) {
+    String onAddOrder(@ModelAttribute("orderToAdd") Order order, @ModelAttribute("userId") int key) {
         order.setUserId(key);
         orderDataManager.insertOrder(order);
         return "forward:/orders";

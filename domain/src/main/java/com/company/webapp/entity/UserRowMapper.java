@@ -1,5 +1,6 @@
 package com.company.webapp.entity;
 
+
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package com.company.service.datamanager;
+package com.company.webapp.service.datamanager;
 
 import com.company.webapp.dao.GenericDao;
 import com.company.webapp.entity.Order;

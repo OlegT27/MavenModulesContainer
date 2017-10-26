@@ -1,9 +1,9 @@
 package com.company.webapp.controller;
 
 
-import com.company.service.datamanager.UserDataManager;
-import com.company.service.dataproducer.UserValidator;
 import com.company.webapp.entity.User;
+import com.company.webapp.service.datamanager.UserDataManager;
+import com.company.webapp.service.dataproducer.UserValidator;
 import com.company.webapp.viewmaker.ViewMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

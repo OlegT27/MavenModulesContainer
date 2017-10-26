@@ -1,9 +1,9 @@
 package com.company.webapp.viewmaker;
 
-import com.company.service.datamanager.OrderDataManager;
-import com.company.service.datamanager.UserDataManager;
 import com.company.webapp.entity.Order;
 import com.company.webapp.entity.User;
+import com.company.webapp.service.datamanager.OrderDataManager;
+import com.company.webapp.service.datamanager.UserDataManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

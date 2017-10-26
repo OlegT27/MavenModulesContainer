@@ -1,13 +1,11 @@
 package com.company.webapp.entity;
 
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRowMapper implements RowMapper<User> {
-    @Nullable
     @Override
     public User mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
         User user = new User();

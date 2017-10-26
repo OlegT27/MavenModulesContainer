@@ -1,4 +1,4 @@
-package com.company.webapp.service.datamanager;
+package com.company.service.datamanager;
 
 
 import com.company.webapp.dao.GenericDao;

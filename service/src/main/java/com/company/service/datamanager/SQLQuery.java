@@ -1,4 +1,4 @@
-package com.company.webapp.service.datamanager;
+package com.company.service.datamanager;
 
 public enum SQLQuery {
     //======USERS SQL=========

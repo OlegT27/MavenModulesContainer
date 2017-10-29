@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="slocale" uri="http://www.springframework.org/tags" %>

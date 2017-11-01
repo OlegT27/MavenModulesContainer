@@ -1,15 +1,9 @@
 package com.company.webapp.service.datamanager;
 
-import com.company.webapp.dao.GenericDao;
-import com.company.webapp.entity.Order;
+import com.company.webapp.daoutil.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class OrderDataManager {
@@ -18,7 +12,7 @@ public class OrderDataManager {
     @Autowired
     private GenericDao orderDAO;
 
-    //==========Data fetchers=============
+   /* //==========Data fetchers=============
     @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
     public List<Order> getAllOrders() {
         return orderDAO.selectData(SQLQuery.ORDER_SELECT_ALL.getQuery());
@@ -59,5 +53,5 @@ public class OrderDataManager {
         return orderDAO.updateData(SQLQuery.ORDER_DELETE_BY_USER_ID.getQuery(), userId);
     }
     //====================================
-
+*/
 }

@@ -1,5 +1,7 @@
-package com.company.webapp.entity;
+package com.company.webapp.order.daoimpl;
 
+
+import com.company.webapp.order.entity.Order;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

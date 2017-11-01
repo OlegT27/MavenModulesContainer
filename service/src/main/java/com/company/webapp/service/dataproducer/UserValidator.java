@@ -1,6 +1,6 @@
 package com.company.webapp.service.dataproducer;
 
-import com.company.webapp.entity.User;
+import com.company.webapp.user.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

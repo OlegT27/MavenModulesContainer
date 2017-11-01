@@ -1,23 +1,13 @@
 package com.company.webapp.controller;
 
 
-import com.company.webapp.entity.Order;
-import com.company.webapp.entity.User;
-import com.company.webapp.service.datamanager.OrderDataManager;
-import com.company.webapp.viewmaker.ViewMaker;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 @SessionAttributes("userId")
 @Controller
 public class OrderController {
-
+/*
     @Autowired
     private OrderDataManager orderDataManager;
     @Autowired
@@ -46,4 +36,5 @@ public class OrderController {
     public int createSessionUserId(@ModelAttribute("currentUser") User user) {
         return user.getId();
     }
+    */
 }

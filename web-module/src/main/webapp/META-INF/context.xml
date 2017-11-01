@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/webapp">
+    <ResourceLink name="jdbc/UsersDB"
+                  global="jdbc/UsersDB"
+                  type="javax.sql.DataSource"/>
 </Context>

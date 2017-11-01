@@ -1,7 +1,7 @@
-package com.company.webapp.dao;
+package com.company.webapp.daoutil;
 
-import com.company.webapp.entity.User;
-import com.company.webapp.entity.UserRowMapper;
+import com.company.webapp.user.daoimpl.UserRowMapper;
+import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,16 +20,37 @@ public class UserDao implements GenericDao<User> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
     public List<User> selectData(String sqlQuery, Object... args) {
         return jdbcTemplate.query(sqlQuery, new UserRowMapper(), args);
     }
 
-    @Override
     public boolean updateData(String sqlQuery, Object... args) {
 
         return jdbcTemplate.update(sqlQuery, args) > 0;
     }
 
+    @Override
+    public List<User> selectData() {
+        return null;
+    }
 
+    @Override
+    public int updateData(User record) {
+        return 0;
+    }
+
+    @Override
+    public int deleteData(User record) {
+        return 0;
+    }
+
+    @Override
+    public int createData(User record) {
+        return 0;
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
 }

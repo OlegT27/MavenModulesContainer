@@ -1,17 +1,10 @@
 package com.company.webapp.service.datamanager;
 
 
-import com.company.webapp.dao.GenericDao;
-import com.company.webapp.entity.User;
+import com.company.webapp.daoutil.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Date;
-import java.util.List;
 
 @Service
 public class UserDataManager {
@@ -23,7 +16,7 @@ public class UserDataManager {
 
     @Autowired
     OrderDataManager orderManager;
-
+/*
     //==========Data fetchers=============
     @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
     public List<User> getAllUsers() {
@@ -76,4 +69,5 @@ public class UserDataManager {
         return userDAO.updateData(SQLQuery.USER_SET_NOT_EXIST.getQuery(), user.getId());
     }
     //====================================
+    */
 }

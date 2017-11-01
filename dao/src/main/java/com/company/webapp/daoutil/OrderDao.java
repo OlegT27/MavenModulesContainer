@@ -1,8 +1,7 @@
-package com.company.webapp.dao;
+package com.company.webapp.daoutil;
 
-
-import com.company.webapp.entity.Order;
-import com.company.webapp.entity.OrderRowMapper;
+import com.company.webapp.order.daoimpl.OrderRowMapper;
+import com.company.webapp.order.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,14 +18,36 @@ public class OrderDao implements GenericDao<Order> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
-    @Override
     public List<Order> selectData(String sqlQuery, Object... args) {
         return jdbcTemplate.query(sqlQuery, new OrderRowMapper(), args);
     }
 
-    @Override
     public boolean updateData(String sqlQuery, Object... args) {
         return jdbcTemplate.update(sqlQuery, args) > 0;
+    }
+
+    @Override
+    public List<Order> selectData() {
+        return null;
+    }
+
+    @Override
+    public int updateData(Order record) {
+        return 0;
+    }
+
+    @Override
+    public int deleteData(Order record) {
+        return 0;
+    }
+
+    @Override
+    public int createData(Order record) {
+        return 0;
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
     }
 }

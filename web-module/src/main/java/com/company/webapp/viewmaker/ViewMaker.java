@@ -1,18 +1,21 @@
 package com.company.webapp.viewmaker;
 
-import com.company.webapp.entity.Order;
-import com.company.webapp.entity.User;
 import com.company.webapp.service.datamanager.OrderDataManager;
-import com.company.webapp.service.datamanager.UserDataManager;
+import com.company.webapp.user.daoimpl.newUserDAOImpl;
+import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ViewMaker {
 
+    // @Autowired
+    // private UserDataManager userDataManager;
+    @Qualifier("newUserDAOImpl")
     @Autowired
-    private UserDataManager userDataManager;
+    private newUserDAOImpl userDAO;
     @Autowired
     private OrderDataManager orderDataManager;
 
@@ -24,11 +27,11 @@ public class ViewMaker {
     }
 
     public ModelAndView getUsersList(ModelAndView model) {
-        model.addObject("usersList", userDataManager.getAllExistUsers());
+        model.addObject("usersList", userDAO.getAllExistUsers());
         return model;
     }
 
-    public ModelAndView getUpdateView(int userId, String viewName) {
+   /* public ModelAndView getUpdateView(int userId, String viewName) {
         ModelAndView model = new ModelAndView();
         model.addObject("userToUpdate", userDataManager.getUserById(userId));
         model.setViewName(viewName);
@@ -41,5 +44,5 @@ public class ViewMaker {
         modelAndView.addObject("orderToAdd", new Order());
         modelAndView.setViewName(viewName);
         return modelAndView;
-    }
+    }*/
 }

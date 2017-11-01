@@ -1,4 +1,4 @@
-package com.company.webapp.service.datamanager;
+package com.company.webapp.daoutil;
 
 public enum SQLQuery {
     //======USERS SQL=========
@@ -9,6 +9,7 @@ public enum SQLQuery {
     USER_SELECT_ONE("SELECT * FROM USERS WHERE USER_ID = ?;"),
     USER_SELECT_IF_EXISTS("SELECT * FROM USERS WHERE USER_EXIST = TRUE;"),
     USER_SET_NOT_EXIST("UPDATE USERS SET USER_EXIST = FALSE WHERE USER_ID = ?;"),
+    USER_GET_COUNT("SELECT COUNT(USER_ID) FROM USERS;"),
 
     //======ORDERS SQL=========
     ORDER_SELECT_ALL("SELECT * FROM ORDERS;"),
@@ -17,7 +18,9 @@ public enum SQLQuery {
     ORDER_INSERT("INSERT INTO ORDERS(ORDER_NAME,ORDER_ADDDATE,USER_ID) VALUES (?,?,?);"),
     ORDER_UPDATE("UPDATE ORDERS SET (ORDER_NAME) = (?) WHERE ORDER_ID = ?;"),
     ORDER_SELECT_ONE("SELECT * FROM ORDERS WHERE ORDER_ID = ?;"),
-    ORDER_SELECT_BY_USER("SELECT * FROM ORDERS WHERE USER_ID = ? ");
+    ORDER_SELECT_BY_USER("SELECT * FROM ORDERS WHERE USER_ID = ? "),
+    ORDER_GET_COUNT_BY_USER("SELECT COUNT(ORDER_ID) FROM ORDERS WHERE USER_ID=?;"),
+    ORDER_GET_COUNT("SELECT COUNT(ORDER_ID) FROM ORDERS;");
     //=======================
 
     private String query;

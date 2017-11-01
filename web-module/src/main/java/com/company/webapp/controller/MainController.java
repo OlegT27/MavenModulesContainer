@@ -2,15 +2,10 @@
 package com.company.webapp.controller;
 
 
-import com.company.webapp.entity.User;
 import com.company.webapp.service.datamanager.UserDataManager;
-import com.company.webapp.service.dataproducer.UserValidator;
 import com.company.webapp.viewmaker.ViewMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +29,7 @@ public class MainController {
         return viewMaker.getUsersList(model);
     }
 
-    @PostMapping("/add")
+   /* @PostMapping("/add")
     public String onAddUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
 
         UserValidator validator = new UserValidator();
@@ -43,12 +38,12 @@ public class MainController {
             return "index";
         userDataManager.insertUser(user);
         return "redirect:/";
-    }
+    }*/
 
-    @PostMapping("/delete")
+   /* @PostMapping("/delete")
     public String onDeleteUser(@ModelAttribute("currentUser") User user) {
         userDataManager.markUserNotExist(user);
         return "redirect:/";
-    }
+    }*/
 
 }

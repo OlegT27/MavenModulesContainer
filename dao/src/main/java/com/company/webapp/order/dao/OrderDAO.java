@@ -7,7 +7,7 @@ import com.company.webapp.user.entity.User;
 
 import java.util.List;
 
-public interface newOrderDAO extends GenericDao<Order> {
+public interface OrderDAO extends GenericDao<Order> {
 
     Order getOrderByKey(int key);
 

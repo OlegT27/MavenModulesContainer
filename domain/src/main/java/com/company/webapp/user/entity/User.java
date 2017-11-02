@@ -13,6 +13,10 @@ public class User {
     public User() {
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(String name, String surname, String patron, Date birthDate, Boolean exist, Integer id) {
         this.name = name;
         this.surname = surname;

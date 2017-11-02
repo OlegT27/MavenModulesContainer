@@ -1,19 +1,18 @@
-package com.company.webapp.order.daoimpl;
+package com.company.webapp.order.dao;
 
 
 import com.company.webapp.daoutil.SQLQuery;
-import com.company.webapp.order.dao.newOrderDAO;
 import com.company.webapp.order.entity.Order;
 import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-@Component
-public class newOrderDAOImpl implements newOrderDAO {
+@Repository
+public class OrderDAOImpl implements OrderDAO {
 
     private JdbcTemplate jdbcTemplate;
 

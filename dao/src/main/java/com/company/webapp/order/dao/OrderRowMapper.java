@@ -1,4 +1,4 @@
-package com.company.webapp.order.daoimpl;
+package com.company.webapp.order.dao;
 
 
 import com.company.webapp.order.entity.Order;

@@ -6,7 +6,7 @@ import com.company.webapp.user.entity.User;
 
 import java.util.List;
 
-public interface newUserDAO extends GenericDao<User> {
+public interface UserDAO extends GenericDao<User> {
 
     List<User> getAllExistUsers();
 

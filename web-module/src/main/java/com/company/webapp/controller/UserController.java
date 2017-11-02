@@ -1,34 +1,65 @@
+
 package com.company.webapp.controller;
 
 
-import com.company.webapp.service.datamanager.UserDataManager;
-import com.company.webapp.viewmaker.ViewMaker;
+import com.company.webapp.user.entity.User;
+import com.company.webapp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserDataManager userDataManager;
-    @Autowired
-    private ViewMaker viewMaker;
+    UserService userService;
 
+    @RequestMapping("/")
+    public ModelAndView onIndexPage() {
+        ModelAndView model = new ModelAndView("index");
+        model.addObject("currentUser", new User());
+        model.addObject("userToSubmit", new User());
+        return model;
+    }
 
-   /* @GetMapping("/update")
+    @RequestMapping("/users")
+    public ModelAndView onUsersList() {
+        ModelAndView model = onIndexPage();
+        model.addObject("usersList", userService.requestUsersList());
+        return model;
+    }
+
+    @PostMapping("/add")
+    public String onAddUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
+        if (userService.submitUser(user, result))
+            return "index";
+        return "redirect:/";
+    }
+
+    @PostMapping("/delete")
+    public String onDeleteUser(@ModelAttribute("currentUser") User user) {
+        userService.deleteUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/update")
     ModelAndView onUpdatePage(@RequestParam int id) {
-        return viewMaker.getUpdateView(id, "user");
+        ModelAndView model = new ModelAndView();
+        model.setViewName("user");
+        model.addObject("userToUpdate", userService.getUserToEdit(new User(id)));
+        return model;
     }
 
     @PostMapping("/update_user")
     ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") User user, BindingResult result) {
-        ModelAndView modelAndView = new ModelAndView();
-        UserValidator validator = new UserValidator();
+        ModelAndView model = new ModelAndView("user");
+        if (userService.updateUser(user, result))
+            model.addObject("userToUpdate", user);
+        else
+            model.addObject("userToUpdate", userService.getUserToEdit(user));
+        return model;
+    }
 
-        validator.validate(user, result);
-        if (!result.hasErrors())
-            userDataManager.updateUser(user);
-        modelAndView.setViewName("user");
-        return modelAndView;
-    }*/
 }

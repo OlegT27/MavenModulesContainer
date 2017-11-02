@@ -1,21 +1,20 @@
-package com.company.webapp.user.daoimpl;
+package com.company.webapp.user.dao;
 
 import com.company.webapp.daoutil.SQLQuery;
-import com.company.webapp.order.dao.newOrderDAO;
-import com.company.webapp.user.dao.newUserDAO;
+import com.company.webapp.order.dao.OrderDAO;
 import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-@Component
-public class newUserDAOImpl implements newUserDAO {
+@Repository
+public class UserDAOImpl implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
-    private newOrderDAO orderManager;
+    private OrderDAO orderManager;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {

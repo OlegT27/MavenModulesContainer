@@ -7,6 +7,8 @@ import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -31,6 +33,7 @@ public class OrderDAOImpl implements OrderDAO {
         return jdbcTemplate.query(SQLQuery.ORDER_SELECT_BY_USER.getQuery(), new OrderRowMapper(), user.getId());
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public int deleteUserOrders(User user) {
         return jdbcTemplate.update(SQLQuery.ORDER_DELETE_BY_USER_ID.getQuery(), user.getId());

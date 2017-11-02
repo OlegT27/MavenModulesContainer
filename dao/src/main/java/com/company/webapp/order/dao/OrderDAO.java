@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(rollbackFor = RuntimeException.class, propagation = Propagation.REQUIRED)
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 public interface OrderDAO extends GenericDao<Order> {
 
     Order getOrderByKey(int key);

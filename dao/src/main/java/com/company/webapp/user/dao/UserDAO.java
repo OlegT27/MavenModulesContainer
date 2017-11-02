@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(rollbackFor = RuntimeException.class, propagation = Propagation.REQUIRED)
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 public interface UserDAO extends GenericDao<User> {
 
     List<User> getAllExistUsers();

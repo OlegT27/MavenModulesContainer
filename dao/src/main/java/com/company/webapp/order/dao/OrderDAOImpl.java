@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 import java.util.List;
 
+
 @Repository
 public class OrderDAOImpl implements OrderDAO {
 
@@ -25,50 +26,96 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order getOrderByKey(int key) {
-        return jdbcTemplate.queryForObject(SQLQuery.ORDER_SELECT_ONE.getQuery(), new OrderRowMapper(), key);
+        try {
+            return jdbcTemplate.queryForObject(SQLQuery.ORDER_SELECT_ONE.getQuery(), new OrderRowMapper(), key);
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return null;
     }
 
     @Override
     public List<Order> getUserOrders(User user) {
-        return jdbcTemplate.query(SQLQuery.ORDER_SELECT_BY_USER.getQuery(), new OrderRowMapper(), user.getId());
+        try {
+            return jdbcTemplate.query(SQLQuery.ORDER_SELECT_BY_USER.getQuery(), new OrderRowMapper(), user.getId());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return null;
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public int deleteUserOrders(User user) {
-        return jdbcTemplate.update(SQLQuery.ORDER_DELETE_BY_USER_ID.getQuery(), user.getId());
+        try {
+            return jdbcTemplate.update(SQLQuery.ORDER_DELETE_BY_USER_ID.getQuery(), user.getId());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 
     @Override
     public int getCountByUser(User user) {
-        return jdbcTemplate.queryForObject
-                (SQLQuery.ORDER_GET_COUNT_BY_USER.getQuery(), new Object[]{user.getId()}, Integer.class);
+        try {
+            return jdbcTemplate.queryForObject
+                    (SQLQuery.ORDER_GET_COUNT_BY_USER.getQuery(), new Object[]{user.getId()}, Integer.class);
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 
     @Override
     public int getCount() {
-        return jdbcTemplate.queryForObject
-                (SQLQuery.ORDER_GET_COUNT.getQuery(), Integer.class);
+        try {
+            return jdbcTemplate.queryForObject
+                    (SQLQuery.ORDER_GET_COUNT.getQuery(), Integer.class);
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 
     @Override
     public List<Order> selectData() {
-        return jdbcTemplate.query(SQLQuery.ORDER_SELECT_ALL.getQuery(), new OrderRowMapper());
+        try {
+            return jdbcTemplate.query(SQLQuery.ORDER_SELECT_ALL.getQuery(), new OrderRowMapper());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return null;
+
     }
 
     @Override
     public int updateData(Order record) {
-        return jdbcTemplate.update
-                (SQLQuery.ORDER_UPDATE.getQuery(), new OrderRowMapper(), record.getName(), record.getOrderId());
+        try {
+            return jdbcTemplate.update
+                    (SQLQuery.ORDER_UPDATE.getQuery(), new OrderRowMapper(), record.getName(), record.getOrderId());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 
     @Override
     public int deleteData(Order record) {
-        return jdbcTemplate.update(SQLQuery.ORDER_DELETE.getQuery(), record.getOrderId());
+        try {
+            return jdbcTemplate.update(SQLQuery.ORDER_DELETE.getQuery(), record.getOrderId());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 
     @Override
     public int createData(Order record) {
-        return jdbcTemplate.update(SQLQuery.ORDER_INSERT.getQuery(), record.getName(), record.getOrderId());
+        try {
+            return jdbcTemplate.update(SQLQuery.ORDER_INSERT.getQuery(), record.getName(), record.getOrderId());
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex.getStackTrace()));
+        }
+        return -1;
     }
 }

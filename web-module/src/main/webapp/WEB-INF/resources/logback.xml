@@ -1,6 +1,7 @@
 <configuration>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-          <file>${TOMCAT_HOME}/logs/logFile.log</file>
+          
+        <file>/logs/logFile.log</file>
           <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
           </layout>

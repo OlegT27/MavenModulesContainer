@@ -15,6 +15,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDAO orderDAO;
 
+    @Autowired
+    private OrderValidator validator;
+
     @Override
     public List<Order> getOrdersList(User user) {
         return orderDAO.getUserOrders(user);
@@ -29,7 +32,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isValidOrder(Order order, BindingResult result) {
-        OrderValidator validator = new OrderValidator();
         validator.validate(order, result);
         if (result.hasErrors())
             return false;

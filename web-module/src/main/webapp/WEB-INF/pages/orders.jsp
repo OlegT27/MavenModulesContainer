@@ -21,10 +21,12 @@
         <tr>
             <td><label><slocale:message code="label.orderName"/></label></td>
             <td><sform:input path="name"/></td>
+            <td><sform:errors path="name"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.orderDate"/></label></td>
             <td><sform:input path="createDate"/></td>
+            <td><sform:errors path="createDate"/></td>
         </tr>
         <tr>
             <td>
@@ -41,16 +43,17 @@
     </td>
 </table>
 
-
-<table>
-    <caption><slocale:message code="label.ordersList"/></caption>
-    <c:forEach var="order" items="${ordersList}">
-        <tr>
-            <td>${order.orderId}</td>
-            <td>${order.name}</td>
-            <td>${order.createDate}</td>
-        </tr>
-    </c:forEach>
-</table>
+<a href="${pageContext.request.contextPath}/orders_list">
+    <table>
+        <caption><slocale:message code="label.ordersList"/></caption>
+        <c:forEach var="order" items="${ordersList}">
+            <tr>
+                <td>${order.orderId}</td>
+                <td>${order.name}</td>
+                <td>${order.createDate}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</a>
 </body>
 </html>

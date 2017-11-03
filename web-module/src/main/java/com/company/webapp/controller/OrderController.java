@@ -26,15 +26,22 @@ public class OrderController {
         ModelAndView model = new ModelAndView();
         model.setViewName("orders");
         model.addObject("orderToAdd", new Order());
+        return model;
+    }
+
+    @RequestMapping("/orders_list")
+    ModelAndView onOrderList(@ModelAttribute("userId") int key) {
+        ModelAndView model = onOrdersPage(key);
         model.addObject("ordersList", orderService.getOrdersList(new User(key)));
         return model;
     }
 
     @PostMapping("/add_order")
-    String onAddOrder(@ModelAttribute("orderToAdd") Order order, @ModelAttribute("userId") int key, BindingResult result) {
+    String onAddOrder(@ModelAttribute("userId") int key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
         order.setUserId(key);
-        orderService.createOrder(order, result);
-        return "forward:/orders";
+        if (!orderService.createOrder(order, result))
+            return "orders";
+        return "redirect:/orders";
     }
 
     @RequestMapping("/back")

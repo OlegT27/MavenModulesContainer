@@ -92,7 +92,7 @@ public class OrderDAOImpl implements OrderDAO {
     public int updateData(Order record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.ORDER_UPDATE.getQuery(), new OrderRowMapper(), record.getName(), record.getOrderId());
+                    (SQLQuery.ORDER_UPDATE.getQuery(), record.getName(), record.getOrderId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
         }

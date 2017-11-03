@@ -15,11 +15,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
+    @Autowired
+    private UserValidator validator;
+
     @Override
     public boolean submitUser(User user, BindingResult result) {
         if (!isValidUser(user, result))
             return false;
-        userDao.createData(user);
+        if (userDao.createData(user) != 1)
+            return false;
         return true;
     }
 
@@ -34,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User userToDel) {
-        userDao.markUserNotExist(userToDel);
+    public void deleteUser(User user) {
+        userDao.markUserNotExist(user);
     }
 
     @Override
@@ -47,7 +51,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValidUser(User user, BindingResult result) {
-        UserValidator validator = new UserValidator();
         validator.validate(user, result);
         if (result.hasErrors())
             return false;

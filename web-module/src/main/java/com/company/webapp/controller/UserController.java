@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("/add")
     public String onAddUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
-        if (userService.submitUser(user, result))
+        if (!userService.submitUser(user, result))
             return "index";
         return "redirect:/";
     }
@@ -55,7 +55,7 @@ public class UserController {
     @PostMapping("/update_user")
     ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") User user, BindingResult result) {
         ModelAndView model = new ModelAndView("user");
-        if (userService.updateUser(user, result))
+        if (!userService.updateUser(user, result))
             model.addObject("userToUpdate", user);
         else
             model.addObject("userToUpdate", userService.getUserToEdit(user));

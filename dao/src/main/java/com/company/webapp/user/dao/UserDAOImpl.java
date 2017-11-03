@@ -14,6 +14,8 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
     private OrderDAO orderManager;
 
     @Autowired
@@ -38,8 +40,7 @@ public class UserDAOImpl implements UserDAO {
     public int updateData(User record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.USER_UPDATE.getQuery(), new UserRowMapper(),
-                            record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate(), record.getId());
+                    (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate(), record.getId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
             return -1;
@@ -63,8 +64,7 @@ public class UserDAOImpl implements UserDAO {
     public int createData(User record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.USER_INSERT.getQuery(), new UserRowMapper(),
-                            record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate());
+                    (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
             return -1;

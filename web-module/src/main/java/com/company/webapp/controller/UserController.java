@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/update")
-    ModelAndView onUpdatePage(@RequestParam int id) {
+    ModelAndView onUpdatePage(@RequestParam Long id) {
         ModelAndView model = new ModelAndView();
         model.setViewName("user");
         model.addObject("userToUpdate", userService.getUserToEdit(new User(id)));

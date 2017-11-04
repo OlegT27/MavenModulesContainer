@@ -22,7 +22,7 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/orders")
-    ModelAndView onOrdersPage(@ModelAttribute("userId") int key) {
+    ModelAndView onOrdersPage(@ModelAttribute("userId") Long key) {
         ModelAndView model = new ModelAndView();
         model.setViewName("orders");
         model.addObject("orderToAdd", new Order());
@@ -30,14 +30,14 @@ public class OrderController {
     }
 
     @RequestMapping("/orders_list")
-    ModelAndView onOrderList(@ModelAttribute("userId") int key) {
+    ModelAndView onOrderList(@ModelAttribute("userId") Long key) {
         ModelAndView model = onOrdersPage(key);
         model.addObject("ordersList", orderService.getOrdersList(new User(key)));
         return model;
     }
 
     @PostMapping("/add_order")
-    String onAddOrder(@ModelAttribute("userId") int key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
+    String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
         order.setUserId(key);
         if (!orderService.createOrder(order, result))
             return "orders";
@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @ModelAttribute("userId")
-    public int createSessionUserId(@ModelAttribute("currentUser") User user) {
+    public Long createSessionUserId(@ModelAttribute("currentUser") User user) {
         return user.getId();
     }
 }

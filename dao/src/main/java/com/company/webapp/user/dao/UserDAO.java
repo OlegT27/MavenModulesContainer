@@ -13,7 +13,7 @@ public interface UserDAO extends GenericDao<User> {
 
     List<User> getAllExistUsers();
 
-    User getUserById(int key);
+    User getUserById(Long key);
 
     boolean markUserNotExist(User user);
 }

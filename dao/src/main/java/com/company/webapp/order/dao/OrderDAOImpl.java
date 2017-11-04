@@ -25,7 +25,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order getOrderByKey(int key) {
+    public Order getOrderByKey(Long key) {
         try {
             return jdbcTemplate.queryForObject(SQLQuery.ORDER_SELECT_ONE.getQuery(), new OrderRowMapper(), key);
         } catch (Exception ex) {

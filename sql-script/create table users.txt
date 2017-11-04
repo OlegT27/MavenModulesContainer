@@ -1,8 +1,8 @@
 CREATE TABLE public.USERS(
-   USER_ID 			   SERIAL PRIMARY KEY     NOT NULL,
-   USER_NAME           CHAR(50),    		
-   USER_SNAME          CHAR(50),    		
-   USER_PATR      	   CHAR(50),
-   USER_BDATE		   DATE,
-   USER_EXIST          BOOLEAN				DEFAULT TRUE
+   ID 			   SERIAL PRIMARY KEY     NOT NULL,
+   NAME           CHAR(50),
+   SNAME          CHAR(50),
+   PATR      	   CHAR(50),
+   BDATE		   DATE,
+   EXIST          BOOLEAN				DEFAULT TRUE
 );

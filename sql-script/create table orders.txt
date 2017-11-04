@@ -1,6 +1,6 @@
 CREATE TABLE public.USERS(
-   ORDER_ID 		   SERIAL PRIMARY KEY   NOT NULL,
-   ORDER_NAME          CHAR(50),
-   ORDER_ADDDATE       DATE                 DEFAULT CURRENT_DATE
-   USER_ID     	       INTEGER              REFERENCES public.users (USER_ID)
+   ID 		   SERIAL PRIMARY KEY   NOT NULL,
+   NAME          CHAR(50),
+   ADDDATE       DATE                 DEFAULT CURRENT_DATE
+   USER_ID     	       BIGINT              REFERENCES public.users (USER_ID)
 );

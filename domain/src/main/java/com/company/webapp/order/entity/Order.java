@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class Order {
 
-    private Integer orderId;
+    private Long orderId;
     private String name;
     private Date createDate;
-    private Integer userId;
+    private Long userId;
 
     public Order() {
     }
 
-    public Order(Integer orderId, String name, Date createDate, Integer userId) {
+    public Order(Long orderId, String name, Date createDate, Long userId) {
         this.orderId = orderId;
         this.name = name;
         this.createDate = createDate;
@@ -28,11 +28,11 @@ public class Order {
                 ;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -52,11 +52,11 @@ public class Order {
         this.createDate = createDate;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

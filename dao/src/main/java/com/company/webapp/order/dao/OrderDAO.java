@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 public interface OrderDAO extends GenericDao<Order> {
 
-    Order getOrderByKey(int key);
+    Order getOrderByKey(Long key);
 
     List<Order> getUserOrders(User user);
 

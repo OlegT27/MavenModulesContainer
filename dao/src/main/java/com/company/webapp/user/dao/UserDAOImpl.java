@@ -95,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int key) {
+    public User getUserById(Long key) {
         try {
             return jdbcTemplate.queryForObject(SQLQuery.USER_SELECT_ONE.getQuery(), new UserRowMapper(), key);
         } catch (Exception ex) {

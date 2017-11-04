@@ -8,16 +8,16 @@ public class User {
     private String patron;
     private Date birthDate;
     private Boolean exist;
-    private Integer id;
+    private Long id;
 
     public User() {
     }
 
-    public User(int id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public User(String name, String surname, String patron, Date birthDate, Boolean exist, Integer id) {
+    public User(String name, String surname, String patron, Date birthDate, Boolean exist, Long id) {
         this.name = name;
         this.surname = surname;
         this.patron = patron;
@@ -72,11 +72,11 @@ public class User {
         this.exist = exist;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

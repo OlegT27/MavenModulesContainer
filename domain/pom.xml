@@ -12,18 +12,5 @@
 
     <packaging>jar</packaging>
 
-    <!--<dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.0.1.RELEASE</version>
-        </dependency>
-    </dependencies>
-    -->
 
 </project>

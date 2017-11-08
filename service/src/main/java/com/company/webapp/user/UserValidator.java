@@ -1,12 +1,12 @@
 package com.company.webapp.user;
 
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-@Component
+@Service
 public class UserValidator implements Validator {
 
     @Override

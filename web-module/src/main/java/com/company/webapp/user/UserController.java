@@ -1,9 +1,7 @@
 
-package com.company.webapp;
+package com.company.webapp.user;
 
 
-import com.company.webapp.user.User;
-import com.company.webapp.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

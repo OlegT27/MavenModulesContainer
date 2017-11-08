@@ -3,7 +3,6 @@ package com.company.webapp.order;
 import com.company.webapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -13,26 +12,16 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDAO orderDAO;
 
-    @Autowired
-    private OrderValidator validator;
-
     @Override
     public List<Order> getOrdersList(User user) {
         return orderDAO.getUserOrders(user);
     }
 
     @Override
-    public boolean createOrder(Order order, BindingResult result) {
-        if (!isValidOrder(order, result))
-            return false;
-        orderDAO.createData(order);
-        return true;
+    public boolean createOrder(Order order) {
+        if (orderDAO.createData(order) != -1)
+            return true;
+        return false;
     }
 
-    private boolean isValidOrder(Order order, BindingResult result) {
-        validator.validate(order, result);
-        if (result.hasErrors())
-            return false;
-        return true;
-    }
 }

@@ -2,7 +2,6 @@ package com.company.webapp.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -12,13 +11,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
-    @Autowired
-    private UserValidator validator;
-
     @Override
-    public boolean submitUser(User user, BindingResult result) {
-        if (!isValidUser(user, result))
-            return false;
+    public boolean createUser(User user) {
         if (userDao.createData(user) != 1)
             return false;
         return true;
@@ -40,18 +34,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUser(User user, BindingResult result) {
-        if (!isValidUser(user, result))
-            return false;
-        userDao.updateData(user);
-        return true;
-    }
-
-    private boolean isValidUser(User user, BindingResult result) {
-        validator.validate(user, result);
-        if (result.hasErrors())
-            return false;
-        return true;
+    public boolean updateUser(User user) {
+        if (userDao.updateData(user) != -1)
+            return true;
+        return false;
     }
 
 }

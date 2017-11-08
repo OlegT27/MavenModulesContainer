@@ -19,6 +19,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderValidator validator;
+
     @RequestMapping("/orders")
     ModelAndView onOrdersPage(@ModelAttribute("userId") Long key) {
         ModelAndView model = new ModelAndView();
@@ -37,7 +40,9 @@ public class OrderController {
     @PostMapping("/add_order")
     String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
         order.setUserId(key);
-        if (!orderService.createOrder(order, result))
+        if (!isValid(order, result))
+            return "orders";
+        if (orderService.createOrder(order))
             return "orders";
         return "redirect:/orders";
     }
@@ -51,5 +56,12 @@ public class OrderController {
     @ModelAttribute("userId")
     public Long createSessionUserId(@ModelAttribute("currentUser") User user) {
         return user.getId();
+    }
+
+    private boolean isValid(Order orderToValidate, BindingResult bindingResult) {
+        validator.validate(orderToValidate, bindingResult);
+        if (bindingResult.hasErrors())
+            return false;
+        return true;
     }
 }

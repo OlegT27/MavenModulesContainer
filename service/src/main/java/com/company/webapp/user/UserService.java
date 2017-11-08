@@ -1,13 +1,11 @@
 package com.company.webapp.user;
 
-import org.springframework.validation.BindingResult;
-
 import java.util.List;
 
 public interface UserService {
 
 
-    boolean submitUser(User user, BindingResult result);
+    boolean createUser(User user);
 
     List<User> requestUsersList();
 
@@ -15,5 +13,5 @@ public interface UserService {
 
     void deleteUser(User user);
 
-    boolean updateUser(User user, BindingResult result);
+    boolean updateUser(User user);
 }

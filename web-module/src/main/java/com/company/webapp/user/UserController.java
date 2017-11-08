@@ -12,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+    @Autowired
+    private UserValidator validator;
 
     @RequestMapping("/")
     public ModelAndView onIndexPage() {
@@ -31,7 +33,9 @@ public class UserController {
 
     @PostMapping("/add")
     public String onAddUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
-        if (!userService.submitUser(user, result))
+        if (!isValid(user, result))
+            return "index";
+        if (userService.createUser(user))
             return "index";
         return "redirect:/";
     }
@@ -53,11 +57,19 @@ public class UserController {
     @PostMapping("/update_user")
     ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") User user, BindingResult result) {
         ModelAndView model = new ModelAndView("user");
-        if (!userService.updateUser(user, result))
-            model.addObject("userToUpdate", user);
-        else
-            model.addObject("userToUpdate", userService.getUserToEdit(user));
-        return model;
+        if (isValid(user, result))
+            if (userService.updateUser(user)) {
+                model.addObject("userToUpdate", userService.getUserToEdit(user));
+                return model;
+            }
+        return model.addObject("userToUpdate", user);
+    }
+
+    private boolean isValid(User userToValidate, BindingResult bindingResult) {
+        validator.validate(userToValidate, bindingResult);
+        if (bindingResult.hasErrors())
+            return false;
+        return true;
     }
 
 }

@@ -67,9 +67,7 @@ public class UserController {
 
     private boolean isValid(User userToValidate, BindingResult bindingResult) {
         validator.validate(userToValidate, bindingResult);
-        if (bindingResult.hasErrors())
-            return false;
-        return true;
+        return !bindingResult.hasErrors();
     }
 
 }

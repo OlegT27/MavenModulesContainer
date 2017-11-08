@@ -60,8 +60,6 @@ public class OrderController {
 
     private boolean isValid(Order orderToValidate, BindingResult bindingResult) {
         validator.validate(orderToValidate, bindingResult);
-        if (bindingResult.hasErrors())
-            return false;
-        return true;
+        return !bindingResult.hasErrors();
     }
 }

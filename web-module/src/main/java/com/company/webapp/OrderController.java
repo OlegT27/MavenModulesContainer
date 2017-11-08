@@ -1,9 +1,9 @@
-package com.company.webapp.controller;
+package com.company.webapp;
 
 
-import com.company.webapp.order.entity.Order;
-import com.company.webapp.order.service.OrderService;
-import com.company.webapp.user.entity.User;
+import com.company.webapp.order.Order;
+import com.company.webapp.order.OrderService;
+import com.company.webapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

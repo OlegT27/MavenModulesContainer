@@ -1,4 +1,4 @@
-package com.company.webapp.order.entity;
+package com.company.webapp.order;
 
 import java.sql.Date;
 

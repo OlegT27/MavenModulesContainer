@@ -1,8 +1,5 @@
-package com.company.webapp.user.service;
+package com.company.webapp.user;
 
-
-import com.company.webapp.user.dao.UserDAO;
-import com.company.webapp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

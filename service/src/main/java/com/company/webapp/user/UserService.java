@@ -1,6 +1,5 @@
-package com.company.webapp.user.service;
+package com.company.webapp.user;
 
-import com.company.webapp.user.entity.User;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;

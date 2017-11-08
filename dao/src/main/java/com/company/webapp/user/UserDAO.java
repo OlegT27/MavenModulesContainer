@@ -1,8 +1,7 @@
-package com.company.webapp.user.dao;
+package com.company.webapp.user;
 
 
 import com.company.webapp.daoutil.GenericDao;
-import com.company.webapp.user.entity.User;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

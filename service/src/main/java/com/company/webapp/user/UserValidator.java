@@ -1,6 +1,5 @@
-package com.company.webapp.order.service;
+package com.company.webapp.user;
 
-import com.company.webapp.order.entity.Order;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -8,14 +7,19 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class OrderValidator implements Validator {
+public class UserValidator implements Validator {
+
     @Override
     public boolean supports(Class aClass) {
-        return Order.class.equals(aClass);
+        return User.class.equals(aClass);
     }
 
     @Override
     public void validate(@Nullable Object target, Errors errors) {
+        // check if empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "patron", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthDate", "error.emptylabel");
     }
 }

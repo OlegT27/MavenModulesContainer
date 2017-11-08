@@ -1,8 +1,7 @@
-package com.company.webapp.user.dao;
+package com.company.webapp.user;
 
 import com.company.webapp.daoutil.SQLQuery;
-import com.company.webapp.order.dao.OrderDAO;
-import com.company.webapp.user.entity.User;
+import com.company.webapp.order.OrderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

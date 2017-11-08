@@ -1,7 +1,6 @@
-package com.company.webapp.order.dao;
+package com.company.webapp.order;
 
 
-import com.company.webapp.order.entity.Order;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

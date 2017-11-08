@@ -1,8 +1,6 @@
-package com.company.webapp.order.service;
+package com.company.webapp.order;
 
-import com.company.webapp.order.dao.OrderDAO;
-import com.company.webapp.order.entity.Order;
-import com.company.webapp.user.entity.User;
+import com.company.webapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

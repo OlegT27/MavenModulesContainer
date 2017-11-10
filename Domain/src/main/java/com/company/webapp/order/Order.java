@@ -1,5 +1,6 @@
 package com.company.webapp.order;
 
+
 import java.sql.Date;
 
 public class Order {

@@ -11,12 +11,12 @@ public interface GenericDao<T> {
 
     List<T> selectData();
 
-    int updateData(T record);
+    long updateData(T record);
 
-    int deleteData(T record);
+    long deleteData(T record);
 
-    int createData(T record);
+    long createData(T record);
 
-    int getCount();
+    long getCount();
 
 }

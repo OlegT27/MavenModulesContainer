@@ -21,7 +21,6 @@
             <version>RELEASE</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.company</groupId>
             <artifactId>domain</artifactId>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.webapp.hiber.Order" table="orders" schema="public" catalog="users_db">
+        <id name="id">
+            <column name="id" sql-type="bigint"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="char(50)" length="50" not-null="true"/>
+        </property>
+        <property name="addDate">
+            <column name="adddate" sql-type="date" not-null="true"/>
+        </property>
+        <many-to-one name="user" class="com.company.webapp.hiber.User">
+            <column name="user_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

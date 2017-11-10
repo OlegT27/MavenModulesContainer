@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int updateData(User record) {
+    public long updateData(User record) {
         try {
             return jdbcTemplate.update
                     (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate(), record.getId());
@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int deleteData(User record) {
+    public long deleteData(User record) {
         try {
             orderManager.deleteUserOrders(record);
             return jdbcTemplate.update(SQLQuery.USER_DELETE.getQuery(), record.getId());
@@ -60,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int createData(User record) {
+    public long createData(User record) {
         try {
             return jdbcTemplate.update
                     (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate());
@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int getCount() {
+    public long getCount() {
         try {
             return jdbcTemplate.queryForObject
                     (SQLQuery.USER_GET_COUNT.getQuery(), Integer.class);

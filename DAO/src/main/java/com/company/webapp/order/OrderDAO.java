@@ -12,7 +12,7 @@ public interface OrderDAO extends GenericDao<Order> {
 
     List<Order> getUserOrders(User user);
 
-    int deleteUserOrders(User user);
+    long deleteUserOrders(User user);
 
-    int getCountByUser(User user);
+    long getCountByUser(User user);
 }

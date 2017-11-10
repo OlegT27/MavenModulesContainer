@@ -42,7 +42,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int deleteUserOrders(User user) {
+    public long deleteUserOrders(User user) {
         try {
             return jdbcTemplate.update(SQLQuery.ORDER_DELETE_BY_USER_ID.getQuery(), user.getId());
         } catch (Exception ex) {
@@ -52,7 +52,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int getCountByUser(User user) {
+    public long getCountByUser(User user) {
         try {
             return jdbcTemplate.queryForObject
                     (SQLQuery.ORDER_GET_COUNT_BY_USER.getQuery(), new Object[]{user.getId()}, Integer.class);
@@ -63,7 +63,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int getCount() {
+    public long getCount() {
         try {
             return jdbcTemplate.queryForObject
                     (SQLQuery.ORDER_GET_COUNT.getQuery(), Integer.class);
@@ -85,7 +85,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int updateData(Order record) {
+    public long updateData(Order record) {
         try {
             return jdbcTemplate.update
                     (SQLQuery.ORDER_UPDATE.getQuery(), record.getName(), record.getOrderId());
@@ -96,7 +96,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int deleteData(Order record) {
+    public long deleteData(Order record) {
         try {
             return jdbcTemplate.update(SQLQuery.ORDER_DELETE.getQuery(), record.getOrderId());
         } catch (Exception ex) {
@@ -106,7 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int createData(Order record) {
+    public long createData(Order record) {
         try {
             return jdbcTemplate.update(SQLQuery.ORDER_INSERT.getQuery(), record.getName(), record.getOrderId());
         } catch (Exception ex) {

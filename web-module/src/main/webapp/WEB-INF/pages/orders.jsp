@@ -25,8 +25,8 @@
         </tr>
         <tr>
             <td><label><slocale:message code="label.orderDate"/></label></td>
-            <td><sform:input path="createDate"/></td>
-            <td><sform:errors path="createDate"/></td>
+            <td><sform:input path="addDate"/></td>
+            <td><sform:errors path="addDate"/></td>
         </tr>
         <tr>
             <td>
@@ -48,9 +48,9 @@
         <caption><slocale:message code="label.ordersList"/></caption>
         <c:forEach var="order" items="${ordersList}">
             <tr>
-                <td>${order.orderId}</td>
+                <td>${order.id}</td>
                 <td>${order.name}</td>
-                <td>${order.createDate}</td>
+                <td>${order.addDate}</td>
             </tr>
         </c:forEach>
     </table>

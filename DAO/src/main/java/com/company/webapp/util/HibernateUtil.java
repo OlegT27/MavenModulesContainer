@@ -18,6 +18,7 @@ public class HibernateUtil {
             return config.configure().buildSessionFactory();
         } catch (HibernateException ex) {
             logger.error("SessionFactory creation failed." + ex);
+            shutdown();
             throw new ExceptionInInitializerError(ex);
         }
     }

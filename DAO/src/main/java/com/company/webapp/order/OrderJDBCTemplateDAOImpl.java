@@ -1,8 +1,8 @@
 package com.company.webapp.order;
 
 
-import com.company.webapp.daoutil.SQLQuery;
 import com.company.webapp.user.User;
+import com.company.webapp.util.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-public class OrderDAOImpl implements OrderDAO {
+public class OrderJDBCTemplateDAOImpl implements OrderDAO {
 
     private JdbcTemplate jdbcTemplate;
 

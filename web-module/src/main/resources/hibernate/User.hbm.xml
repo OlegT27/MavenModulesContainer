@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.company.webapp.hiber.User" table="users" schema="public" catalog="users_db">
+    <class name="com.company.webapp.user.hiber.User" table="users" schema="public" catalog="users_db">
         <id name="id">
             <column name="id" sql-type="bigint"/>
         </id>

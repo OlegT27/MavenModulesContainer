@@ -1,14 +1,22 @@
 package com.company.webapp.user;
 
+import com.company.webapp.order.OrderHibernateDAOImpl;
+import com.company.webapp.user.hiber.User;
 import com.company.webapp.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransactionException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class UserHibernateImpl implements UserDAO {
+@Repository
+public class UserHibernateDAOImpl implements UserHiberDAO {
+
+    @Autowired
+    OrderHibernateDAOImpl orderDAO;
 
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
@@ -36,7 +44,6 @@ public class UserHibernateImpl implements UserDAO {
         try {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
-            session = HibernateUtil.getSessionFactory().openSession();
             User order = session.get(User.class, key);
             session.getTransaction().commit();
             return order;
@@ -53,6 +60,7 @@ public class UserHibernateImpl implements UserDAO {
 
     @Override
     public boolean markUserNotExist(User user) {
+        orderDAO.deleteUserOrders(user);
         user.setExist(false);
         return updateData(user) == 1;
     }

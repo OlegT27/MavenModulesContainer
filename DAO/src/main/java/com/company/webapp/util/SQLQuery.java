@@ -1,4 +1,4 @@
-package com.company.webapp.daoutil;
+package com.company.webapp.util;
 
 public enum SQLQuery {
     //======USERS SQL=========

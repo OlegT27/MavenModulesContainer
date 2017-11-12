@@ -22,8 +22,8 @@
     <sform:form modelAttribute="userToUpdate" method="post" action="${pageContext.request.contextPath}/update_user">
         <tr>
             <td><label><slocale:message code="label.lastName"/></label></td>
-            <td><sform:input path="surname"/></td>
-            <td><sform:errors path="surname"/></td>
+            <td><sform:input path="sname"/></td>
+            <td><sform:errors path="sname"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.firstName"/></label></td>
@@ -32,13 +32,13 @@
         </tr>
         <tr>
             <td><label><slocale:message code="label.patron"/></label></td>
-            <td><sform:input path="patron"/></td>
-            <td><sform:errors path="patron"/></td>
+            <td><sform:input path="patr"/></td>
+            <td><sform:errors path="patr"/></td>
         </tr>
         <tr>
             <td><label><slocale:message code="label.birthDate"/></label></td>
-            <td><sform:input path="birthDate" title="YYYY-MM-DD"/></td>
-            <td><sform:errors path="birthDate"/></td>
+            <td><sform:input path="bdate" title="YYYY-MM-DD"/></td>
+            <td><sform:errors path="bdate"/></td>
         </tr>
         <tr>
             <td><sform:button><slocale:message code="button.submit"/></sform:button></td>

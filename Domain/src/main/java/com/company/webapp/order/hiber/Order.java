@@ -1,4 +1,9 @@
-package com.company.webapp.hiber;
+package com.company.webapp.order.hiber;
+
+
+import com.company.webapp.user.hiber.User;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,6 +17,7 @@ public class Order {
     private User user;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public long getId() {
         return id;
@@ -42,6 +48,7 @@ public class Order {
     }
 
     @ManyToOne
+    @Cascade(CascadeType.DELETE)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     public User getUser() {
         return user;
@@ -51,6 +58,15 @@ public class Order {
         this.user = user;
     }
 
+
+    @Override
+    public String toString() {
+        return id + ' ' +
+                name + ' ' +
+                addDate + ' ' +
+                user
+                ;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

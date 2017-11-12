@@ -1,4 +1,4 @@
-package com.company.webapp.hiber;
+package com.company.webapp.user.hiber;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,6 +15,7 @@ public class User {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -73,6 +74,12 @@ public class User {
         this.exist = exist;
     }
 
+
+    @Override
+    public String toString() {
+        return sname + ' ' + name + ' ' +
+                patr + ' ' + bdate;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

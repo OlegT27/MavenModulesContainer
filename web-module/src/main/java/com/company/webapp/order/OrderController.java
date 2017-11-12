@@ -1,7 +1,8 @@
 package com.company.webapp.order;
 
 
-import com.company.webapp.user.User;
+import com.company.webapp.order.hiber.Order;
+import com.company.webapp.user.hiber.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private OrderHiberService orderService;
 
     @Autowired
     private OrderValidator validator;
@@ -33,13 +34,16 @@ public class OrderController {
     @RequestMapping("/orders_list")
     ModelAndView onOrderList(@ModelAttribute("userId") Long key) {
         ModelAndView model = onOrdersPage(key);
-        model.addObject("ordersList", orderService.getOrdersList(new User(key)));
+        User user = new User();
+        user.setId(key);
+        model.addObject("ordersList", orderService.getOrdersList(user));
         return model;
     }
 
     @PostMapping("/add_order")
     String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
-        order.setUserId(key);
+        //order.setUserId(key);
+        // order.setUser();
         if (!isValid(order, result))
             return "orders";
         if (orderService.createOrder(order))

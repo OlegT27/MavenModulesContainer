@@ -1,8 +1,9 @@
 package com.company.webapp.user;
 
-import com.company.webapp.daoutil.SQLQuery;
 import com.company.webapp.order.OrderDAO;
+import com.company.webapp.util.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +11,11 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserJDBCTemplateDAOImpl implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
 
+    @Qualifier("orderJDBCTemplateDAOImpl")
     @Autowired
     private OrderDAO orderManager;
 

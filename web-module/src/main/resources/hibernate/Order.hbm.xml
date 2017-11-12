@@ -4,9 +4,10 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.company.webapp.hiber.Order" table="orders" schema="public" catalog="users_db">
+    <class name="com.company.webapp.order.hiber.Order" table="orders" schema="public" catalog="users_db">
         <id name="id">
             <column name="id" sql-type="bigint"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="char(50)" length="50" not-null="true"/>
@@ -14,7 +15,7 @@
         <property name="addDate">
             <column name="adddate" sql-type="date" not-null="true"/>
         </property>
-        <many-to-one name="user" class="com.company.webapp.hiber.User">
+        <many-to-one name="user" cascade="delete" class="com.company.webapp.user.hiber.User">
             <column name="user_id"/>
         </many-to-one>
     </class>

@@ -2,17 +2,19 @@
 package com.company.webapp.user;
 
 
+import com.company.webapp.user.hiber.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserHiberService userService;
     @Autowired
     private UserValidator validator;
 
@@ -50,7 +52,9 @@ public class UserController {
     ModelAndView onUpdatePage(@RequestParam Long id) {
         ModelAndView model = new ModelAndView();
         model.setViewName("user");
-        model.addObject("userToUpdate", userService.getUserToEdit(new User(id)));
+        User userToEdit = new User();
+        userToEdit.setId(id);
+        model.addObject("userToUpdate", userService.getUserToEdit(userToEdit));
         return model;
     }
 

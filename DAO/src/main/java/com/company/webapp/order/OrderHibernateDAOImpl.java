@@ -1,16 +1,19 @@
 package com.company.webapp.order;
 
-import com.company.webapp.user.User;
+import com.company.webapp.order.hiber.Order;
+import com.company.webapp.user.hiber.User;
 import com.company.webapp.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransactionException;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class OrderHibernateImpl implements OrderDAO {
+@Repository
+public class OrderHibernateDAOImpl implements OrderHiberDAO {
 
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
@@ -56,9 +59,27 @@ public class OrderHibernateImpl implements OrderDAO {
     }
 
     @Override
-    @Deprecated
     public long deleteUserOrders(User user) {
-        return 0;
+        List<Order> orders = getUserOrders(user);
+        if (orders == null)
+            return -1;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+            for (Order userOrder : orders) {
+                session.delete(userOrder);
+            }
+            session.getTransaction().commit();
+            return orders.size();
+        } catch (HibernateException hiberEx) {
+            logger.error("HiberExc ", hiberEx);
+            try {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
+            } catch (TransactionException transEx) {
+                logger.warn("Can't rollback ->", transEx);
+            }
+            return -1;
+        }
     }
 
     @Override

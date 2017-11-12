@@ -1,8 +1,7 @@
 package com.company.webapp.order;
 
 
-import com.company.webapp.order.hiber.Order;
-import com.company.webapp.user.hiber.User;
+import com.company.webapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

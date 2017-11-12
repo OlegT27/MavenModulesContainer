@@ -1,7 +1,6 @@
 package com.company.webapp.user;
 
 import com.company.webapp.order.OrderHibernateDAOImpl;
-import com.company.webapp.user.hiber.User;
 import com.company.webapp.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

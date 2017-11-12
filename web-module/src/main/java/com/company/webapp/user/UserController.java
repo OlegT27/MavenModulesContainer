@@ -2,7 +2,6 @@
 package com.company.webapp.user;
 
 
-import com.company.webapp.user.hiber.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

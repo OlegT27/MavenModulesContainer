@@ -1,6 +1,5 @@
 package com.company.webapp.user;
 
-import com.company.webapp.user.hiber.User;
 import com.company.webapp.util.WebComponent;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.Errors;

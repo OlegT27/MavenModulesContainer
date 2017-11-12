@@ -1,37 +1,31 @@
 package com.company.webapp.user;
 
+import javax.persistence.*;
 import java.sql.Date;
 
+@Entity
+@Table(name = "users", schema = "public", catalog = "users_db")
 public class User {
+    private long id;
     private String name;
-    private String surname;
-    private String patron;
-    private Date birthDate;
+    private String sname;
+    private String patr;
+    private Date bdate;
     private Boolean exist;
-    private Long id;
 
-    public User() {
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getId() {
+        return id;
     }
 
-    public User(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public User(String name, String surname, String patron, Date birthDate, Boolean exist, Long id) {
-        this.name = name;
-        this.surname = surname;
-        this.patron = patron;
-        this.birthDate = birthDate;
-        this.exist = exist;
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return surname + ' ' + name + ' ' +
-                patron + ' ' + birthDate;
-    }
-
+    @Basic
+    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
@@ -40,30 +34,38 @@ public class User {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    @Basic
+    @Column(name = "sname", nullable = true, length = 50)
+    public String getSname() {
+        return sname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
-    public String getPatron() {
-        return patron;
+    @Basic
+    @Column(name = "patr", nullable = true, length = 50)
+    public String getPatr() {
+        return patr;
     }
 
-    public void setPatron(String patron) {
-        this.patron = patron;
+    public void setPatr(String patr) {
+        this.patr = patr;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    @Basic
+    @Column(name = "bdate", nullable = true)
+    public Date getBdate() {
+        return bdate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBdate(Date bdate) {
+        this.bdate = bdate;
     }
 
+    @Basic
+    @Column(name = "exist", nullable = true)
     public Boolean getExist() {
         return exist;
     }
@@ -72,11 +74,37 @@ public class User {
         this.exist = exist;
     }
 
-    public Long getId() {
-        return id;
+
+    @Override
+    public String toString() {
+        return sname + ' ' + name + ' ' +
+                patr + ' ' + bdate;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (sname != null ? !sname.equals(user.sname) : user.sname != null) return false;
+        if (patr != null ? !patr.equals(user.patr) : user.patr != null) return false;
+        if (bdate != null ? !bdate.equals(user.bdate) : user.bdate != null) return false;
+        if (exist != null ? !exist.equals(user.exist) : user.exist != null) return false;
+
+        return true;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (sname != null ? sname.hashCode() : 0);
+        result = 31 * result + (patr != null ? patr.hashCode() : 0);
+        result = 31 * result + (bdate != null ? bdate.hashCode() : 0);
+        result = 31 * result + (exist != null ? exist.hashCode() : 0);
+        return result;
     }
 }

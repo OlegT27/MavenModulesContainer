@@ -1,7 +1,5 @@
 package com.company.webapp.user;
 
-import com.company.webapp.user.hiber.User;
-
 import java.util.List;
 
 public interface UserHiberService {

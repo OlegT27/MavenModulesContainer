@@ -1,6 +1,5 @@
 package com.company.webapp.user;
 
-import com.company.webapp.user.hiber.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

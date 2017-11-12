@@ -14,8 +14,8 @@
         <property name="hbm2ddl.auto">update</property>
         <!-- mapping -->
         <mapping resource="hibernate/Order.hbm.xml"/>
-        <mapping class="com.company.webapp.order.hiber.Order"/>
+        <mapping class="com.company.webapp.order.Order"/>
         <mapping resource="hibernate/User.hbm.xml"/>
-        <mapping class="com.company.webapp.user.hiber.User"/>
+        <mapping class="com.company.webapp.user.User"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,42 +1,34 @@
 package com.company.webapp.order;
 
 
+import com.company.webapp.user.User;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.*;
 import java.sql.Date;
 
+@Entity
+@Table(name = "orders", schema = "public", catalog = "users_db")
 public class Order {
-
-    private Long orderId;
+    private long id;
     private String name;
-    private Date createDate;
-    private Long userId;
+    private Date addDate;
+    private User user;
 
-    public Order() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public long getId() {
+        return id;
     }
 
-    public Order(Long orderId, String name, Date createDate, Long userId) {
-        this.orderId = orderId;
-        this.name = name;
-        this.createDate = createDate;
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return orderId + ' ' +
-                name + ' ' +
-                createDate + ' ' +
-                userId
-                ;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
+    @Basic
+    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
@@ -45,19 +37,55 @@ public class Order {
         this.name = name;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    @Basic
+    @Column(name = "adddate", nullable = true)
+    public Date getAddDate() {
+        return addDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setAddDate(Date adddate) {
+        this.addDate = adddate;
     }
 
-    public Long getUserId() {
-        return userId;
+    @ManyToOne
+    @Cascade(CascadeType.DELETE)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return id + ' ' +
+                name + ' ' +
+                addDate + ' ' +
+                user
+                ;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (id != order.id) return false;
+        if (name != null ? !name.equals(order.name) : order.name != null) return false;
+        if (addDate != null ? !addDate.equals(order.addDate) : order.addDate != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (addDate != null ? addDate.hashCode() : 0);
+        return result;
     }
 }

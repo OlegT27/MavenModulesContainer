@@ -26,10 +26,10 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value = "/addAjax", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    /*@RequestMapping(value = "/addAjax", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void ajaxAddTest(@RequestBody User user) {
         userService.createUser(user);
-    }
+    }*/
 
     @RequestMapping("/users")
     public ModelAndView onUsersList() {
@@ -38,8 +38,8 @@ public class UserController {
         return model;
     }
 
-    @PostMapping("/add")
-    public String onAddUser(@ModelAttribute("userToSubmit") User user, BindingResult result) {
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String onAddUser(@RequestBody User user, BindingResult result) {
         if (!isValid(user, result))
             return "index";
         if (userService.createUser(user))

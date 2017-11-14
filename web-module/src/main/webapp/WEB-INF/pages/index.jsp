@@ -27,16 +27,10 @@
                     bdate: $("#bdate").val(),
                 }
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/addAjax",
+                    url: "${pageContext.request.contextPath}/add",
                     data: JSON.stringify(adduser),
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        alert("OK! " + data);
-                    },
-                    error: function (status) {
-                        alert("FAIL!" + status);
-                    }
                 });
             }
 

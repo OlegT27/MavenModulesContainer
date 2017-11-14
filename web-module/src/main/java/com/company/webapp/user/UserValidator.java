@@ -18,8 +18,8 @@ public class UserValidator implements Validator {
     public void validate(@Nullable Object target, Errors errors) {
         // check if empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "patron", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthDate", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sname", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "patr", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "bdate", "error.emptylabel");
     }
 }

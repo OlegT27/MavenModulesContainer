@@ -3,6 +3,7 @@ package com.company.webapp.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,11 @@ public class UserController {
         model.addObject("currentUser", new User());
         model.addObject("userToSubmit", new User());
         return model;
+    }
+
+    @RequestMapping(value = "/addAjax", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void ajaxAddTest(@RequestBody User user) {
+        userService.createUser(user);
     }
 
     @RequestMapping("/users")

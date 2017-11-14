@@ -13,60 +13,109 @@
 <html>
 <head>
     <title><slocale:message code="label.title"/></title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            var dialog, form;
+
+            function addUser() {
+                var adduser = {
+                    name: $("#name").val(),
+                    sname: $("#sname").val(),
+                    patr: $("#patr").val(),
+                    bdate: $("#bdate").val(),
+                }
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/addAjax",
+                    data: JSON.stringify(adduser),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        alert("OK! " + data);
+                    },
+                    error: function (status) {
+                        alert("FAIL!" + status);
+                    }
+                });
+            }
+
+            dialog = $("#submit-form").dialog({
+                autoOpen: false,
+                modal: true,
+                close: function () {
+                    alert("close");
+                }
+            });
+            form = dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+                addUser();
+            });
+
+            $("#get-form").button().on("click", function () {
+                dialog.dialog("open");
+            });
+        });
+    </script>
 </head>
 <body>
-
-<table>
-    <sform:form modelAttribute="userToSubmit" method="post" action="${pageContext.request.contextPath}/add">
-        <tr>
-            <td><label><slocale:message code="label.lastName"/></label></td>
-            <td><sform:input path="sname"/></td>
-            <td><sform:errors path="sname"/></td>
-        </tr>
-        <tr>
-            <td><label><slocale:message code="label.firstName"/></label></td>
-            <td><sform:input path="name"/></td>
-            <td><sform:errors path="name"/></td>
-        </tr>
-        <tr>
-            <td><label><slocale:message code="label.patron"/></label></td>
-            <td><sform:input path="patr"/></td>
-            <td><sform:errors path="patr"/></td>
-        </tr>
-        <tr>
-            <td><label><slocale:message code="label.birthDate"/></label></td>
-            <td><sform:input path="bdate" title="YYYY-MM-DD"/></td>
-            <td><sform:errors path="bdate"/></td>
-        </tr>
-        <tr>
-            <td><sform:button><slocale:message code="button.submit"/></sform:button></td>
-        </tr>
-    </sform:form>
-</table>
-
-<a href="${pageContext.request.contextPath}/users">
-<table>
-    <caption><slocale:message code="label.listTitle"/></caption>
-    <c:forEach var="user" items="${usersList}">
-        <sform:form id="userForm" modelAttribute="currentUser" action="${pageContext.request.contextPath}/delete"
-                    method="post">
+<div id="submit-form">
+    <table>
+        <sform:form modelAttribute="userToSubmit" method="post">
             <tr>
-                <sform:hidden path="id" value="${user.id}"/>
-                <td><a href="${pageContext.request.contextPath}/update?id=${user.id}">${user}</a></td>
+                <td><label><slocale:message code="label.lastName"/></label></td>
+                <td><sform:input path="sname" id="sname"/></td>
+                <td><sform:errors path="sname"/></td>
+            </tr>
+            <tr>
+                <td><label><slocale:message code="label.firstName"/></label></td>
+                <td><sform:input path="name" id="name"/></td>
+                <td><sform:errors path="name"/></td>
+            </tr>
+            <tr>
+                <td><label><slocale:message code="label.patron"/></label></td>
+                <td><sform:input path="patr" id="patr"/></td>
+                <td><sform:errors path="patr"/></td>
+            </tr>
+            <tr>
+                <td><label><slocale:message code="label.birthDate"/></label></td>
+                <td><sform:input path="bdate" id="bdate"/></td>
+                <td><sform:errors path="bdate"/></td>
+            </tr>
+            <tr>
                 <td>
-                    <sform:button>
-                        <slocale:message code="button.delete"/>
-                    </sform:button>
-                </td>
-                <td>
-                    <sform:button formaction="${pageContext.request.contextPath}/orders">
-                        <slocale:message code="button.orders"/>
-                    </sform:button>
+                    <button id="create-user" type="submit"><slocale:message code="button.submit"/></button>
                 </td>
             </tr>
         </sform:form>
-    </c:forEach>
-</table>
+    </table>
+</div>
+
+<button id="get-form"><slocale:message code="button.userform"/></button>
+
+<a href="${pageContext.request.contextPath}/users">
+    <table>
+        <caption><slocale:message code="label.listTitle"/></caption>
+        <c:forEach var="user" items="${usersList}">
+            <sform:form id="userForm" modelAttribute="currentUser" action="${pageContext.request.contextPath}/delete"
+                        method="post">
+                <tr>
+                    <sform:hidden path="id" value="${user.id}"/>
+                    <td><a href="${pageContext.request.contextPath}/update?id=${user.id}">${user}</a></td>
+                    <td>
+                        <sform:button>
+                            <slocale:message code="button.delete"/>
+                        </sform:button>
+                    </td>
+                    <td>
+                        <sform:button formaction="${pageContext.request.contextPath}/orders">
+                            <slocale:message code="button.orders"/>
+                        </sform:button>
+                    </td>
+                </tr>
+            </sform:form>
+        </c:forEach>
+    </table>
 </a>
 </body>
 

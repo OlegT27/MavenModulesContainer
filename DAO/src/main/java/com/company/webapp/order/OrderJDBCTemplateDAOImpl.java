@@ -88,7 +88,7 @@ public class OrderJDBCTemplateDAOImpl implements OrderDAO {
     public long updateData(Order record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.ORDER_UPDATE.getQuery(), record.getName(), record.getOrderId());
+                    (SQLQuery.ORDER_UPDATE.getQuery(), record.getName(), record.getId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
         }
@@ -98,7 +98,7 @@ public class OrderJDBCTemplateDAOImpl implements OrderDAO {
     @Override
     public long deleteData(Order record) {
         try {
-            return jdbcTemplate.update(SQLQuery.ORDER_DELETE.getQuery(), record.getOrderId());
+            return jdbcTemplate.update(SQLQuery.ORDER_DELETE.getQuery(), record.getId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
         }
@@ -108,7 +108,7 @@ public class OrderJDBCTemplateDAOImpl implements OrderDAO {
     @Override
     public long createData(Order record) {
         try {
-            return jdbcTemplate.update(SQLQuery.ORDER_INSERT.getQuery(), record.getName(), record.getOrderId());
+            return jdbcTemplate.update(SQLQuery.ORDER_INSERT.getQuery(), record.getName(), record.getId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
         }

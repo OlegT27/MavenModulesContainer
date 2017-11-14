@@ -1,11 +1,12 @@
 package com.company.webapp.user;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "users_db")
-public class User {
+public class User implements Serializable {
     private long id;
     private String name;
     private String sname;

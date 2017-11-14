@@ -41,7 +41,7 @@ public class UserJDBCTemplateDAOImpl implements UserDAO {
     public long updateData(User record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate(), record.getId());
+                    (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate(), record.getId());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
             return -1;
@@ -65,7 +65,7 @@ public class UserJDBCTemplateDAOImpl implements UserDAO {
     public long createData(User record) {
         try {
             return jdbcTemplate.update
-                    (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSurname(), record.getPatron(), record.getBirthDate());
+                    (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate());
         } catch (Exception ex) {
             logger.error(String.valueOf(ex.getStackTrace()));
             return -1;

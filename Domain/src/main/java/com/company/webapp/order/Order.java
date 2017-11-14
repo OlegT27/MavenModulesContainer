@@ -6,11 +6,12 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "orders", schema = "public", catalog = "users_db")
-public class Order {
+public class Order implements Serializable {
     private long id;
     private String name;
     private Date addDate;

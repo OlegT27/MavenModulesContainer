@@ -12,7 +12,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         Order order = new Order();
         order.setId(resultSet.getLong("ID"));
         order.setName(resultSet.getString("NAME"));
-        order.setAddDate(resultSet.getDate("ADDDATE"));
+        order.setAddDate(resultSet.getDate("ADDDATE").toInstant());
         //order.setUser(resultSet.getLong("USER_ID"));
         return order;
     }

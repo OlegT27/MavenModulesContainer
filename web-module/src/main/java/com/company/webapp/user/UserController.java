@@ -2,12 +2,15 @@
 package com.company.webapp.user;
 
 
+import com.company.webapp.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Set;
 
 
 @Controller
@@ -24,6 +27,14 @@ public class UserController {
         model.addObject("currentUser", new User());
         model.addObject("userToSubmit", new User());
         return model;
+    }
+
+    @RequestMapping("/test")
+    public void test(@ModelAttribute("userToUpdate") User user) {
+        Set<Order> userOrders = user.getOrders();
+        for (Order o : userOrders) {
+            System.out.println(o);
+        }
     }
 
     /*@RequestMapping(value = "/addAjax", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

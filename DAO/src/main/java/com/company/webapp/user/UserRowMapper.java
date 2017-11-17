@@ -13,7 +13,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setName(resultSet.getString("NAME"));
         user.setSname(resultSet.getString("SNAME"));
         user.setPatr(resultSet.getString("PATR"));
-        user.setBdate(resultSet.getDate("BDATE"));
+        user.setBdate(resultSet.getDate("BDATE").toLocalDate());
         user.setExist(resultSet.getBoolean("EXIST"));
         return user;
     }

@@ -1,22 +1,39 @@
 package com.company.webapp.user;
 
+import com.company.webapp.order.Order;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "users_db")
 public class User implements Serializable {
-    private long id;
-    private String name;
-    private String sname;
-    private String patr;
-    private Date bdate;
-    private Boolean exist;
-
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @SequenceGenerator(name = "user_seq", sequenceName = "users_user_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+
+    private long id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "sname")
+    private String sname;
+    @Column(name = "patr")
+    private String patr;
+    @Column(name = "bdate")
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate bdate;
+    @Column(name = "exist")
+    private Boolean exist;
+    @OneToMany(mappedBy = "user")
+    @Cascade(CascadeType.ALL)
+    private Set<Order> orders;
+
     public long getId() {
         return id;
     }
@@ -25,48 +42,38 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
-    @Basic
-    @Column(name = "sname", nullable = true, length = 50)
     public String getSname() {
         return sname;
     }
 
     public void setSname(String sname) {
-        this.sname = sname;
+        this.sname = sname.trim();
     }
 
-    @Basic
-    @Column(name = "patr", nullable = true, length = 50)
     public String getPatr() {
         return patr;
     }
 
     public void setPatr(String patr) {
-        this.patr = patr;
+        this.patr = patr.trim();
     }
 
-    @Basic
-    @Column(name = "bdate", nullable = true)
-    public Date getBdate() {
+    public LocalDate getBdate() {
         return bdate;
     }
 
-    public void setBdate(Date bdate) {
+    public void setBdate(LocalDate bdate) {
         this.bdate = bdate;
     }
 
-    @Basic
-    @Column(name = "exist", nullable = true)
     public Boolean getExist() {
         return exist;
     }
@@ -75,12 +82,20 @@ public class User implements Serializable {
         this.exist = exist;
     }
 
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
 
     @Override
     public String toString() {
         return sname + ' ' + name + ' ' +
                 patr + ' ' + bdate;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

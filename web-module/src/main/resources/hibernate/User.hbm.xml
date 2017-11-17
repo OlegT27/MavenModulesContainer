@@ -7,7 +7,7 @@
     <class name="com.company.webapp.user.User" table="users" schema="public" catalog="users_db">
         <id name="id">
             <column name="id" sql-type="bigint"/>
-            <generator class="identity"/>
+            <generator class="sequence"/>
         </id>
         <property name="name">
             <column name="name" sql-type="char(50)" length="50" not-null="true"/>
@@ -24,5 +24,11 @@
         <property name="exist">
             <column name="exist" sql-type="boolean" not-null="true"/>
         </property>
+        <set name="orders" cascade="delete">
+            <key>
+                <column name="id" not-null="true"/>
+            </key>
+            <one-to-many class="com.company.webapp.order.Order"/>
+        </set>
     </class>
 </hibernate-mapping>

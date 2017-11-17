@@ -9,24 +9,33 @@
   Time: 16:50
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <html>
 <head>
+    <script>
+        function currentDate() {
+            var date = new Date();
+            var field = document.getElementById("date");
+            field.value = date;
+        }
+    </script>
     <title><slocale:message code="label.ordersPage"/></title>
 </head>
 <body>
 <h1><slocale:message code="label.ordersPage"/></h1>
 <table>
-    <sform:form modelAttribute="orderToAdd" method="post" action="${pageContext.request.contextPath}/add_order">
+    <sform:form modelAttribute="orderToAdd" method="post" action="${pageContext.request.contextPath}/add_order"
+                onsubmit="currentDate()">
         <tr>
             <td><label><slocale:message code="label.orderName"/></label></td>
             <td><sform:input path="name"/></td>
             <td><sform:errors path="name"/></td>
         </tr>
         <tr>
-            <td><label><slocale:message code="label.orderDate"/></label></td>
-            <td><sform:input path="addDate"/></td>
-            <td><sform:errors path="addDate"/></td>
+            <td>
+                <sform:hidden path="addDate" id="date"/>
+            </td>
         </tr>
         <tr>
             <td>

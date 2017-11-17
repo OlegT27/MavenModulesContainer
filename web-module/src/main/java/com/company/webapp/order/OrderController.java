@@ -42,10 +42,9 @@ public class OrderController {
     @PostMapping("/add_order")
     String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
         //order.setUserId(key);
-        // order.setUser();
         if (!isValid(order, result))
             return "orders";
-        if (orderService.createOrder(order))
+        if (orderService.createOrder(order, key))
             return "orders";
         return "redirect:/orders";
     }

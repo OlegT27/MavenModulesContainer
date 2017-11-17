@@ -7,7 +7,7 @@
     <class name="com.company.webapp.order.Order" table="orders" schema="public" catalog="users_db">
         <id name="id">
             <column name="id" sql-type="bigint"/>
-            <generator class="identity"/>
+            <generator class="sequence"/>
         </id>
         <property name="name">
             <column name="name" sql-type="char(50)" length="50" not-null="true"/>
@@ -15,7 +15,7 @@
         <property name="addDate">
             <column name="adddate" sql-type="date" not-null="true"/>
         </property>
-        <many-to-one name="user" cascade="delete" class="com.company.webapp.user.User">
+        <many-to-one name="user" class="com.company.webapp.user.User">
             <column name="user_id"/>
         </many-to-one>
     </class>

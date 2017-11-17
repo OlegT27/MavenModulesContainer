@@ -11,4 +11,5 @@ public interface UserHiberDAO extends GenericDao<User> {
     User getUserById(Long key);
 
     boolean markUserNotExist(User user);
+
 }

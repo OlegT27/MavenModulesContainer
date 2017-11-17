@@ -8,4 +8,6 @@ public interface OrderHiberService {
     List<Order> getOrdersList(User user);
 
     boolean createOrder(Order order);
+
+    boolean createOrder(Order order, Long key);
 }

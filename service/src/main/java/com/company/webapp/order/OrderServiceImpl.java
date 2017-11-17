@@ -1,10 +1,10 @@
 package com.company.webapp.order;
 
 import com.company.webapp.user.User;
+import com.company.webapp.user.UserHiberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,16 +16,25 @@ public class OrderServiceImpl implements OrderHiberService {
     @Qualifier("orderHibernateDAOImpl")
     @Autowired
     private OrderHiberDAO orderDAO;
+    @Autowired
+    private UserHiberDAO userDAO;
 
     @Override
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    @Transactional
     public List<Order> getOrdersList(User user) {
         return orderDAO.getUserOrders(user);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     public boolean createOrder(Order order) {
+        return orderDAO.createData(order) != -1;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean createOrder(Order order, Long key) {
+        order.setUser(userDAO.getUserById(key));
         return orderDAO.createData(order) != -1;
     }
 

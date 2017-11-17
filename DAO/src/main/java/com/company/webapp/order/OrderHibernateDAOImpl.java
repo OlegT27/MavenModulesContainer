@@ -1,12 +1,11 @@
 package com.company.webapp.order;
 
 import com.company.webapp.user.User;
-import com.company.webapp.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.TransactionException;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,24 +13,16 @@ import java.util.List;
 @Repository
 public class OrderHibernateDAOImpl implements OrderHiberDAO {
 
-    private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public Order getOrderByKey(Long key) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-            session = HibernateUtil.getSessionFactory().openSession();
-            Order order = session.get(Order.class, key);
-            session.getTransaction().commit();
-            return order;
+            return session.get(Order.class, key);
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return null;
         }
     }
@@ -40,43 +31,31 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public List<Order> getUserOrders(User user) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
+            User currUser = session.get(User.class, user.getId());
             Query query = session.createQuery("from Order where user=:currUser");
-            query.setParameter("currUser", user);
+            query.setParameter("currUser", currUser);
             List<Order> result = query.list();
-            session.getTransaction().commit();
             return result;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return null;
         }
     }
 
     @Override
     public long deleteUserOrders(User user) {
+        // Using this stuff to get rid of orders which belonged to "not exist" user
         List<Order> orders = getUserOrders(user);
         if (orders == null)
-            return -1;
+            return 0;
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
             for (Order userOrder : orders) {
                 session.delete(userOrder);
             }
-            session.getTransaction().commit();
             return orders.size();
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
     }
@@ -85,19 +64,12 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public long getCountByUser(User user) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
             Query query = session.createQuery("select count(id) from Order where user=:currUser");
             query.setParameter("currUser", user);
             Long result = (Long) query.uniqueResult();
-            session.getTransaction().commit();
-            return 1;
+            return result;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
 
@@ -107,36 +79,26 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public List<Order> selectData() {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
             List<Order> myList = session.createQuery("from Order").list();
-            session.getTransaction().commit();
             return myList;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return null;
         }
     }
 
     @Override
-    public long updateData(Order record) {
+    public long updateData(Order updatedOrder) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-            session.saveOrUpdate(record);
-            session.getTransaction().commit();
+            // Get persistent object (PO)
+            Order order = session.get(Order.class, updatedOrder.getId());
+            // Replace PO's fields with new ones
+            order.setName(updatedOrder.getName());
+            order.setAddDate(updatedOrder.getAddDate());
             return 1;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
     }
@@ -145,17 +107,10 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public long deleteData(Order record) {
         try {
             Session session = sessionFactory.openSession();
-            session.beginTransaction();
             session.delete(record);
-            session.getTransaction().commit();
             return 1;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
     }
@@ -164,17 +119,10 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public long createData(Order record) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
             Long result = (Long) session.save(record);
-            session.getTransaction().commit();
             return result;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
     }
@@ -183,17 +131,10 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     public long getCount() {
         try {
             Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
             Long result = (Long) session.createQuery("select count(id) from Order ").uniqueResult();
-            session.getTransaction().commit();
-            return 1;
+            return result;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
-            try {
-                sessionFactory.getCurrentSession().getTransaction().rollback();
-            } catch (TransactionException transEx) {
-                logger.warn("Can't rollback ->", transEx);
-            }
             return -1;
         }
 

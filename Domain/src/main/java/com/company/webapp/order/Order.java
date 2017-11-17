@@ -4,22 +4,31 @@ package com.company.webapp.order;
 import com.company.webapp.user.User;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.Instant;
 
 @Entity
 @Table(name = "orders", schema = "public", catalog = "users_db")
 public class Order implements Serializable {
+    @Id
+    @SequenceGenerator(name = "order_seq", sequenceName = "orders_order_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @Column(name = "id")
     private long id;
+    @Column(name = "name")
     private String name;
-    private Date addDate;
+    @Column(name = "adddate")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Instant addDate;
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+
     public long getId() {
         return id;
     }
@@ -28,29 +37,22 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
-    @Basic
-    @Column(name = "adddate", nullable = true)
-    public Date getAddDate() {
+    public Instant getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date adddate) {
+    public void setAddDate(Instant adddate) {
         this.addDate = adddate;
     }
 
-    @ManyToOne
-    @Cascade(CascadeType.DELETE)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     public User getUser() {
         return user;
     }
@@ -68,6 +70,7 @@ public class Order implements Serializable {
                 user
                 ;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserHiberService {
     @Transactional(rollbackFor = Exception.class)
     public boolean createUser(User user) {
         user.setExist(true);
-        return userDao.createData(user) == 1;
+        return userDao.createData(user) != -1;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.company.webapp.order;
 
 import com.company.webapp.GenericDao;
-import com.company.webapp.user.User;
 
 import java.util.List;
 
@@ -9,9 +8,9 @@ public interface OrderHiberDAO extends GenericDao<Order> {
 
     Order getOrderByKey(Long key);
 
-    List<Order> getUserOrders(User user);
+    List<Order> getUserOrders(Long userId);
 
-    long deleteUserOrders(User user);
+    long deleteUserOrders(Long userId);
 
-    long getCountByUser(User user);
+    long getCountByUser(Long userId);
 }

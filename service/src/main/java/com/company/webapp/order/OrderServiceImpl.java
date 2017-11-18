@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderHiberService {
     @Override
     @Transactional
     public List<Order> getOrdersList(User user) {
-        return orderDAO.getUserOrders(user);
+        return orderDAO.getUserOrders(user.getId());
     }
 
     @Override

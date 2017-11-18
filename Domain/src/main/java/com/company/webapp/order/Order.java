@@ -2,8 +2,6 @@ package com.company.webapp.order;
 
 
 import com.company.webapp.user.User;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -24,7 +22,6 @@ public class Order implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Instant addDate;
     @ManyToOne
-    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

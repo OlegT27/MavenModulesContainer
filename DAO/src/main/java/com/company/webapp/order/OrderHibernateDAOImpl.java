@@ -4,10 +4,10 @@ import com.company.webapp.user.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -28,14 +28,13 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
+    public List<Order> getUserOrders(Long userId) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            User currUser = session.get(User.class, user.getId());
-            Query query = session.createQuery("from Order where user=:currUser");
-            query.setParameter("currUser", currUser);
-            List<Order> result = query.list();
-            return result;
+            User currUser = session.get(User.class, userId);
+            List<Order> orderList = new ArrayList<>();
+            orderList.addAll(currUser.getOrders());
+            return orderList;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
             return null;
@@ -43,17 +42,13 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     }
 
     @Override
-    public long deleteUserOrders(User user) {
+    public long deleteUserOrders(Long userId) {
         // Using this stuff to get rid of orders which belonged to "not exist" user
-        List<Order> orders = getUserOrders(user);
-        if (orders == null)
-            return 0;
         try {
             Session session = sessionFactory.getCurrentSession();
-            for (Order userOrder : orders) {
-                session.delete(userOrder);
-            }
-            return orders.size();
+            User currUser = session.get(User.class, userId);
+            currUser.setOrders(null);
+            return 1;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
             return -1;
@@ -61,16 +56,17 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     }
 
     @Override
-    public long getCountByUser(User user) {
+    public long getCountByUser(Long userId) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery("select count(id) from Order where user=:currUser");
-            query.setParameter("currUser", user);
-            Long result = (Long) query.uniqueResult();
-            return result;
+            User user = session.get(User.class, userId);
+            return user.getOrders().size();
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
             return -1;
+        } catch (NullPointerException ex) {
+            // when tryin' to get size form not existing user list;
+            return 0;
         }
 
     }
@@ -116,11 +112,13 @@ public class OrderHibernateDAOImpl implements OrderHiberDAO {
     }
 
     @Override
-    public long createData(Order record) {
+    public long createData(Order order) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            Long result = (Long) session.save(record);
-            return result;
+            User user = session.get(User.class, order.getUser().getId());
+            user.getOrders().add(order);
+            session.save(order);
+            return 1;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);
             return -1;

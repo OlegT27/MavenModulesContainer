@@ -30,7 +30,7 @@ public class User implements Serializable {
     private LocalDate bdate;
     @Column(name = "exist")
     private Boolean exist;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     private Set<Order> orders;
 

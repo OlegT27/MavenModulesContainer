@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td><label><slocale:message code="label.birthDate"/></label></td>
-            <td><sform:input path="bdate" pattern="dd.MM.yyyy"/></td>
+            <td><sform:input path="bdate"/></td>
             <td><sform:errors path="bdate"/></td>
         </tr>
         <tr>

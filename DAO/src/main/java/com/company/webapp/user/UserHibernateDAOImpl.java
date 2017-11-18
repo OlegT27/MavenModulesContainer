@@ -42,15 +42,17 @@ public class UserHibernateDAOImpl implements UserHiberDAO {
 
     @Override
     public boolean markUserNotExist(User userToDel) {
-        //Useless or not? If Cascade is configured this method should be redundant
-        //but markUserNotExist isn't "delete" operation - it's "update"
-        orderDAO.deleteUserOrders(userToDel);
+
+        // markUserNotExist isn't "delete" operation - it's "update"
+        // so. you need to drop users manually
+        //orderDAO.deleteUserOrders(userToDel.getId());
         try {
             Session session = sessionFactory.getCurrentSession();
             // Getting persist object (PO)
             User user = session.get(User.class, userToDel.getId());
             // Set field value to false (kind of "update")
             user.setExist(false);
+            user.getOrders().clear();
             return true;
         } catch (HibernateException hiberEx) {
             logger.error("HiberExc ", hiberEx);

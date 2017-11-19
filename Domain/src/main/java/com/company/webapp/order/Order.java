@@ -5,6 +5,7 @@ import com.company.webapp.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -17,6 +18,7 @@ public class Order implements Serializable {
     @Column(name = "id")
     private long id;
     @Column(name = "name")
+    @NotBlank(message = "{error.emptylabel}")
     private String name;
     @Column(name = "adddate")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

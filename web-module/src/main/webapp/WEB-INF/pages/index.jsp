@@ -56,33 +56,33 @@
 <body>
 <div id="submit-form">
     <table>
-        <sform:form modelAttribute="userToSubmit" method="post">
+        <form method="post">
             <tr>
                 <td><label><slocale:message code="label.lastName"/></label></td>
-                <td><sform:input path="sname" id="sname"/></td>
-                <td><sform:errors path="sname"/></td>
+                <td><input type="text" id="sname"/></td>
+                <sform:errors path="sname"/>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.firstName"/></label></td>
-                <td><sform:input path="name" id="name"/></td>
-                <td><sform:errors path="name"/></td>
+                <td><input type="text" id="name"/></td>
+                <sform:errors path="name"/>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.patron"/></label></td>
-                <td><sform:input path="patr" id="patr"/></td>
-                <td><sform:errors path="patr"/></td>
+                <td><input type="text" id="patr"/></td>
+                <sform:errors path="patr"/>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.birthDate"/></label></td>
-                <td><sform:input path="bdate" id="bdate"/></td>
-                <td><sform:errors path="bdate"/></td>
+                <td><input type="text" id="bdate"/></td>
+                <sform:errors path="bdate"/>
             </tr>
             <tr>
                 <td>
                     <button id="create-user" type="submit"><slocale:message code="button.submit"/></button>
                 </td>
             </tr>
-        </sform:form>
+        </form>
     </table>
 </div>
 

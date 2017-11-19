@@ -43,8 +43,6 @@ public class UserHibernateDAOImpl implements UserHiberDAO {
     @Override
     public boolean markUserNotExist(User userToDel) {
 
-        // markUserNotExist isn't "delete" operation - it's "update"
-        // so. you need to drop users manually
         //orderDAO.deleteUserOrders(userToDel.getId());
         try {
             Session session = sessionFactory.getCurrentSession();

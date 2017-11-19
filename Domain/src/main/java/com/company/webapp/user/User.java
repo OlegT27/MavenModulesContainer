@@ -2,13 +2,15 @@ package com.company.webapp.user;
 
 import com.company.webapp.order.Order;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "users_db")
@@ -20,18 +22,22 @@ public class User implements Serializable {
 
     private long id;
     @Column(name = "name")
+    @NotBlank(message = "{error.emptylabel}")
     private String name;
     @Column(name = "sname")
+    @NotBlank(message = "{error.emptylabel}")
     private String sname;
     @Column(name = "patr")
+    @NotBlank(message = "{error.emptylabel}")
     private String patr;
     @Column(name = "bdate")
     @JsonFormat(pattern = "dd.MM.yyyy")
+    @NotNull(message = "{error.emptylabel}")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate bdate;
     @Column(name = "exist")
     private Boolean exist;
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    @Cascade(CascadeType.ALL)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Order> orders;
 
     public long getId() {

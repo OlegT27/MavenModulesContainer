@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 @SessionAttributes("userId")
 @Controller
 public class OrderController {
@@ -40,9 +42,10 @@ public class OrderController {
     }
 
     @PostMapping("/add_order")
-    String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") Order order, BindingResult result) {
+    String onAddOrder(@ModelAttribute("userId") Long key, @ModelAttribute("orderToAdd") @Valid Order order, BindingResult result) {
         //order.setUserId(key);
-        if (!isValid(order, result))
+        // if (!isValid(order, result))
+        if (result.hasErrors())
             return "orders";
         if (orderService.createOrder(order, key))
             return "orders";

@@ -2,15 +2,15 @@
 package com.company.webapp.user;
 
 
-import com.company.webapp.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Set;
+import javax.validation.Valid;
 
 
 @Controller
@@ -25,22 +25,8 @@ public class UserController {
     public ModelAndView onIndexPage() {
         ModelAndView model = new ModelAndView("index");
         model.addObject("currentUser", new User());
-        model.addObject("userToSubmit", new User());
         return model;
     }
-
-    @RequestMapping("/test")
-    public void test(@ModelAttribute("userToUpdate") User user) {
-        Set<Order> userOrders = user.getOrders();
-        for (Order o : userOrders) {
-            System.out.println(o);
-        }
-    }
-
-    /*@RequestMapping(value = "/addAjax", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void ajaxAddTest(@RequestBody User user) {
-        userService.createUser(user);
-    }*/
 
     @RequestMapping("/users")
     public ModelAndView onUsersList() {
@@ -49,9 +35,10 @@ public class UserController {
         return model;
     }
 
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String onAddUser(@RequestBody User user, BindingResult result) {
-        if (!isValid(user, result))
+    @RequestMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String onAddUser(@Validated @RequestBody User user, BindingResult result) {
+        //if (!isValid(user, result))
+        if (result.hasErrors())
             return "index";
         if (userService.createUser(user))
             return "index";
@@ -75,9 +62,9 @@ public class UserController {
     }
 
     @PostMapping("/update_user")
-    ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") User user, BindingResult result) {
+    ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") @Valid User user, BindingResult result) {
         ModelAndView model = new ModelAndView("user");
-        if (isValid(user, result))
+        if (!result.hasErrors())
             if (userService.updateUser(user)) {
                 model.addObject("userToUpdate", userService.getUserToEdit(user));
                 return model;

@@ -1,14 +1,7 @@
-<%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="slocale" uri="http://www.springframework.org/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: olego
-  Date: 11.10.2017
-  Time: 19:06
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
@@ -27,22 +20,29 @@
                     patr: $("#patr").val(),
                     bdate: $("#bdate").val(),
                 }
+
                 $.ajax({
                     url: "${pageContext.request.contextPath}/add",
                     data: JSON.stringify(adduser),
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.status === 'fail') {
+                            var errors = data.errorMessages;
+                            $.each(errors, function (key, value) {
+//                                console.log(key + "-" + value);
+                                $("#" + key + "-error").text(value);
+                            });
+                        }
+                    }
                 });
             }
 
             dialog = $("#submit-form").dialog({
                 autoOpen: false,
                 modal: true,
-                close: function () {
-                    alert("close");
-                }
             });
-            form = dialog.find("form").on("submit", function (event) {
+            dialog.find("form").on("submit", function (event) {
                 event.preventDefault();
                 addUser();
             });
@@ -56,33 +56,37 @@
 <body>
 <div id="submit-form">
     <table>
-        <form method="post">
+        <sform:form modelAttribute="user">
             <tr>
                 <td><label><slocale:message code="label.lastName"/></label></td>
-                <td><input type="text" id="sname"/></td>
-                <sform:errors path="sname"/>
+                <td><sform:input path="sname" id="sname"/></td>
+                <td><label id="sname-error"/></td>
+                    <%--<sform:errors path="sname" id="sname-error"/>--%>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.firstName"/></label></td>
-                <td><input type="text" id="name"/></td>
-                <sform:errors path="name"/>
+                <td><sform:input path="name" id="name"/></td>
+                <td><label id="name-error"/></td>
+                    <%--<sform:errors path="name" id="name-error"/>--%>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.patron"/></label></td>
-                <td><input type="text" id="patr"/></td>
-                <sform:errors path="patr"/>
+                <td><sform:input path="patr" id="patr"/></td>
+                <td><label id="patr-error"/></td>
+                    <%--<sform:errors path="patr" id="patr-error"/>--%>
             </tr>
             <tr>
                 <td><label><slocale:message code="label.birthDate"/></label></td>
-                <td><input type="text" id="bdate"/></td>
-                <sform:errors path="bdate"/>
+                <td><sform:input path="bdate" id="bdate"/></td>
+                    <%--<sform:errors path="bdate" id="bdate-error"/>--%>
+                <td><label id="bdate-error"/></td>
             </tr>
             <tr>
                 <td>
                     <button id="create-user" type="submit"><slocale:message code="button.submit"/></button>
                 </td>
             </tr>
-        </form>
+        </sform:form>
     </table>
 </div>
 

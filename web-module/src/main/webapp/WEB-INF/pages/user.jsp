@@ -21,7 +21,7 @@
 
 
 <table>
-    <sform:form modelAttribute="userToUpdate" method="post" action="${pageContext.request.contextPath}/update_user">
+    <sform:form modelAttribute="user">
         <tr>
             <td><label><slocale:message code="label.lastName"/></label></td>
             <td><sform:input path="sname"/></td>

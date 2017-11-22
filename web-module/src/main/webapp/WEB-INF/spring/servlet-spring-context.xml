@@ -12,10 +12,15 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation" expression="com.company.webapp.util.WebComponent"/>
     </context:component-scan>
-
+    <!---->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="/WEB-INF/resources/mylocale"/>
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/resources/labels</value>
+                <value>/WEB-INF/resources/ValidationMessages</value>
+            </list>
+        </property>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 

@@ -15,6 +15,6 @@ public class OrderValidator implements Validator {
 
     @Override
     public void validate(@Nullable Object target, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotBlank.orderToAdd.name");
     }
 }

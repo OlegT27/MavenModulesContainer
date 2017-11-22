@@ -18,7 +18,7 @@ public class Order implements Serializable {
     @Column(name = "id")
     private long id;
     @Column(name = "name")
-    @NotBlank(message = "{error.emptylabel}")
+    @NotBlank
     private String name;
     @Column(name = "adddate")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

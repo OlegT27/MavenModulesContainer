@@ -17,9 +17,9 @@ public class UserValidator implements Validator {
     @Override
     public void validate(@Nullable Object target, Errors errors) {
         // check if empty
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sname", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "patr", "error.emptylabel");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "bdate", "error.emptylabel");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotBlank.user.name");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sname", "NotBlank.user.sname");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "patr", "NotBlank.user.patr");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "bdate", "NotBlank.user.bdate");
     }
 }

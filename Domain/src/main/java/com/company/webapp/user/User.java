@@ -22,17 +22,17 @@ public class User implements Serializable {
 
     private long id;
     @Column(name = "name")
-    @NotBlank(message = "{error.emptylabel}")
+    @NotBlank
     private String name;
     @Column(name = "sname")
-    @NotBlank(message = "{error.emptylabel}")
+    @NotBlank
     private String sname;
     @Column(name = "patr")
-    @NotBlank(message = "{error.emptylabel}")
+    @NotBlank
     private String patr;
     @Column(name = "bdate")
     @JsonFormat(pattern = "dd.MM.yyyy")
-    @NotNull(message = "{error.emptylabel}")
+    @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate bdate;
     @Column(name = "exist")

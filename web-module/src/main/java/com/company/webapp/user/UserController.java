@@ -2,11 +2,11 @@
 package com.company.webapp.user;
 
 
+import com.company.webapp.util.ValidationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +18,7 @@ public class UserController {
 
     @Autowired
     private UserHiberService userService;
+
     @Autowired
     private UserValidator validator;
 
@@ -25,6 +26,7 @@ public class UserController {
     public ModelAndView onIndexPage() {
         ModelAndView model = new ModelAndView("index");
         model.addObject("currentUser", new User());
+        model.addObject("user", new User());
         return model;
     }
 
@@ -36,13 +38,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String onAddUser(@Validated @RequestBody User user, BindingResult result) {
-        //if (!isValid(user, result))
-        if (result.hasErrors())
-            return "index";
-        if (userService.createUser(user))
-            return "index";
-        return "redirect:/";
+    public @ResponseBody
+    ValidationResponse onAddUser(@Valid @RequestBody User user, BindingResult result) {
+        ValidationResponse response = new ValidationResponse();
+        response.setStatus("fail");
+        if (result.hasErrors()) {
+            response.setErrorMessageList(result.getFieldErrors());
+            return response;
+        }
+        if (userService.createUser(user)) {
+            response.setStatus("ok");
+        }
+        return response;
     }
 
     @PostMapping("/delete")
@@ -57,19 +64,19 @@ public class UserController {
         model.setViewName("user");
         User userToEdit = new User();
         userToEdit.setId(id);
-        model.addObject("userToUpdate", userService.getUserToEdit(userToEdit));
+        model.addObject("user", userService.getUserToEdit(userToEdit));
         return model;
     }
 
     @PostMapping("/update_user")
-    ModelAndView onUpdateUser(@ModelAttribute("userToUpdate") @Valid User user, BindingResult result) {
+    ModelAndView onUpdateUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         ModelAndView model = new ModelAndView("user");
         if (!result.hasErrors())
             if (userService.updateUser(user)) {
-                model.addObject("userToUpdate", userService.getUserToEdit(user));
+                model.addObject("user", userService.getUserToEdit(user));
                 return model;
             }
-        return model.addObject("userToUpdate", user);
+        return model.addObject("user", user);
     }
 
     private boolean isValid(User userToValidate, BindingResult bindingResult) {

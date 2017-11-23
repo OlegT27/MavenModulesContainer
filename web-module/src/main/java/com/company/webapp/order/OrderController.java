@@ -47,8 +47,7 @@ public class OrderController {
         // if (!isValid(order, result))
         if (result.hasErrors())
             return "orders";
-        if (orderService.createOrder(order, key))
-            return "orders";
+        orderService.createOrder(order, key);
         return "redirect:/orders";
     }
 

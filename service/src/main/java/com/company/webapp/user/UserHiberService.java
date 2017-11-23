@@ -5,7 +5,7 @@ import java.util.List;
 public interface UserHiberService {
 
 
-    boolean createUser(User user);
+    void createUser(User user);
 
     List<User> requestUsersList();
 
@@ -13,5 +13,5 @@ public interface UserHiberService {
 
     void deleteUser(User user);
 
-    boolean updateUser(User user);
+    void updateUser(User user);
 }

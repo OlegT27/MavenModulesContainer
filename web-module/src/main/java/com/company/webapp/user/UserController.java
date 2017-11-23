@@ -46,9 +46,8 @@ public class UserController {
             response.setErrorMessageList(result.getFieldErrors());
             return response;
         }
-        if (userService.createUser(user)) {
-            response.setStatus("ok");
-        }
+        userService.createUser(user);
+        response.setStatus("ok");
         return response;
     }
 
@@ -71,11 +70,11 @@ public class UserController {
     @PostMapping("/update_user")
     ModelAndView onUpdateUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         ModelAndView model = new ModelAndView("user");
-        if (!result.hasErrors())
-            if (userService.updateUser(user)) {
-                model.addObject("user", userService.getUserToEdit(user));
-                return model;
-            }
+        if (!result.hasErrors()) {
+            userService.updateUser(user);
+            model.addObject("user", userService.getUserToEdit(user));
+            return model;
+        }
         return model.addObject("user", user);
     }
 

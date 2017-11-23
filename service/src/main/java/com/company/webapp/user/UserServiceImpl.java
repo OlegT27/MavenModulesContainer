@@ -16,9 +16,9 @@ public class UserServiceImpl implements UserHiberService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean createUser(User user) {
+    public void createUser(User user) {
         user.setExist(true);
-        return userDao.createData(user) != -1;
+        userDao.createData(user);
     }
 
     @Override
@@ -34,15 +34,15 @@ public class UserServiceImpl implements UserHiberService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void deleteUser(User user) {
         userDao.markUserNotExist(user);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean updateUser(User user) {
-        return userDao.updateData(user) != -1;
+    @Transactional
+    public void updateUser(User user) {
+        userDao.updateData(user);
     }
 
 }

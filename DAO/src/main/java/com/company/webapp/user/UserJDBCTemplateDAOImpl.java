@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
+@Deprecated
 public class UserJDBCTemplateDAOImpl implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
@@ -38,83 +39,46 @@ public class UserJDBCTemplateDAOImpl implements UserDAO {
     }
 
     @Override
-    public long updateData(User record) {
-        try {
-            return jdbcTemplate.update
-                    (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate(), record.getId());
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return -1;
-        }
+    public void updateData(User record) {
+        jdbcTemplate.update
+                (SQLQuery.USER_UPDATE.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate(), record.getId());
 
     }
 
     @Override
-    public long deleteData(User record) {
-        try {
-            orderManager.deleteUserOrders(record);
-            return jdbcTemplate.update(SQLQuery.USER_DELETE.getQuery(), record.getId());
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return -1;
-        }
-
+    public void deleteData(User record) {
+        orderManager.deleteUserOrders(record);
+        jdbcTemplate.update(SQLQuery.USER_DELETE.getQuery(), record.getId());
     }
 
     @Override
-    public long createData(User record) {
-        try {
-            return jdbcTemplate.update
-                    (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate());
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return -1;
-        }
+    public void createData(User record) {
+        jdbcTemplate.update
+                (SQLQuery.USER_INSERT.getQuery(), record.getName(), record.getSname(), record.getPatr(), record.getBdate());
+
+
     }
 
     @Override
     public long getCount() {
-        try {
-            return jdbcTemplate.queryForObject
-                    (SQLQuery.USER_GET_COUNT.getQuery(), Integer.class);
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return -1;
-        }
-
+        return jdbcTemplate.queryForObject
+                (SQLQuery.USER_GET_COUNT.getQuery(), Integer.class);
     }
 
     @Override
     public List<User> getAllExistUsers() {
-        try {
-            return jdbcTemplate.query
-                    (SQLQuery.USER_SELECT_IF_EXISTS.getQuery(), new UserRowMapper());
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return null;
-        }
+        return jdbcTemplate.query
+                (SQLQuery.USER_SELECT_IF_EXISTS.getQuery(), new UserRowMapper());
     }
 
     @Override
     public User getUserById(Long key) {
-        try {
-            return jdbcTemplate.queryForObject(SQLQuery.USER_SELECT_ONE.getQuery(), new UserRowMapper(), key);
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return null;
-        }
+        return jdbcTemplate.queryForObject(SQLQuery.USER_SELECT_ONE.getQuery(), new UserRowMapper(), key);
     }
 
     @Override
-    public boolean markUserNotExist(User user) {
-        try {
-            orderManager.deleteUserOrders(user);
-            jdbcTemplate.update(SQLQuery.USER_SET_NOT_EXIST.getQuery(), user.getId());
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex.getStackTrace()));
-            return false;
-        }
-        return true;
-
+    public void markUserNotExist(User user) {
+        orderManager.deleteUserOrders(user);
+        jdbcTemplate.update(SQLQuery.USER_SET_NOT_EXIST.getQuery(), user.getId());
     }
 }

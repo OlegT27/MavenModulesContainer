@@ -7,7 +7,7 @@ import java.util.List;
 public interface OrderHiberService {
     List<Order> getOrdersList(User user);
 
-    boolean createOrder(Order order);
+    void createOrder(Order order);
 
-    boolean createOrder(Order order, Long key);
+    void createOrder(Order order, Long key);
 }

@@ -10,7 +10,7 @@ public interface OrderHiberDAO extends GenericDao<Order> {
 
     List<Order> getUserOrders(Long userId);
 
-    long deleteUserOrders(Long userId);
+    void deleteUserOrders(Long userId);
 
     long getCountByUser(Long userId);
 }

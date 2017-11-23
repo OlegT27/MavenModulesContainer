@@ -26,16 +26,16 @@ public class OrderServiceImpl implements OrderHiberService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean createOrder(Order order) {
-        return orderDAO.createData(order) != -1;
+    @Transactional
+    public void createOrder(Order order) {
+        orderDAO.createData(order);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean createOrder(Order order, Long key) {
+    @Transactional
+    public void createOrder(Order order, Long key) {
         order.setUser(userDAO.getUserById(key));
-        return orderDAO.createData(order) != -1;
+        orderDAO.createData(order);
     }
 
 }
